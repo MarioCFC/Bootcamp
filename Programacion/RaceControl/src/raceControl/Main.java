@@ -1,4 +1,4 @@
-package RaceControl;
+package raceControl;
 
 public class Main {
 
