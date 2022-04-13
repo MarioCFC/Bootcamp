@@ -1,4 +1,4 @@
-package Competition;
+package competition;
 
 public class Car {
 	private static double maxSpeed;
@@ -9,12 +9,6 @@ public class Car {
 	public Car(String brand, String model) {
 		this.brand = brand;
 		this.model = model;
-	}
-
-	public Car(String brand, String model, Garage sticker) {
-		this.brand = brand;
-		this.model = model;
-		this.sticker = sticker;
 	}
 
 	public static double getMaxSpeed() {

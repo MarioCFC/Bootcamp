@@ -1,12 +1,13 @@
-package IO;
+package utils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import Competition.Car;
-import Competition.Garage;
+import competition.Car;
+import competition.Garage;
 
 public class ParticipantsGenerator {
 
@@ -21,7 +22,7 @@ public class ParticipantsGenerator {
 		}
 	}
 
-	public static HashMap<Car, Double> generateParticipants(List<Garage> garages) throws Exception {
+	public static ArrayList<Car> generateParticipants(List<Garage> garages) throws Exception {
 		garageValidation(garages);
 		if (garages.size() == 1) {
 			return generateParticipantsOfOneGarage(garages.get(0));
@@ -31,33 +32,33 @@ public class ParticipantsGenerator {
 
 	}
 
-	private static HashMap<Car, Double> generateParticipantsOfMultipleGarages(List<Garage> garages) throws Exception {
+	private static ArrayList<Car> generateParticipantsOfMultipleGarages(List<Garage> garages) throws Exception {
 		garageValidation(garages);
-		HashMap<Car, Double> participants = new HashMap();
+		HashSet<Car> participants = new HashSet();
 		Random rand = new Random();
 		for (Garage garage : garages) {
 			Car randomCar;
 			try {
 				randomCar = garage.getCarByIndex(rand.nextInt(garage.getNumeberOfCars()));
-				participants.put(randomCar, 0.0);
+				participants.add(randomCar);
 			} catch (Exception e) {
 				Logger.getLogger("ParticipantsGeneratorLog").info("Error al generar participantes");
 			}
 
 		}
 
-		return participants;
+		return new ArrayList<Car>(participants);
 
 	}
 
-	private static HashMap<Car, Double> generateParticipantsOfOneGarage(Garage garages) throws Exception {
+	private static ArrayList<Car> generateParticipantsOfOneGarage(Garage garages) throws Exception {
 		garageValidation(garages);
-		HashMap<Car, Double> participants = new HashMap();
+		HashSet<Car> participants = new HashSet();
 		for (Car car : garages.getCars()) {
-			participants.put(car, 0.0);
+			participants.add(car);
 		}
 
-		return participants;
+		return new ArrayList<Car>(participants);
 	}
 
 }
