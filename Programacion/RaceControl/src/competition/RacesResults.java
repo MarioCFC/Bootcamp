@@ -7,7 +7,7 @@ public class RacesResults {
 	private ArrayList<ResultOfCarInARace> results;
 
 	private RacesResults() {
-		results = new ArrayList<ResultOfCarInARace>();
+		results = new ArrayList();
 	}
 
 	public static RacesResults getInstance() {
@@ -17,8 +17,8 @@ public class RacesResults {
 		return raceResultManager;
 	}
 
-	private void addNewResult(Race race, Car car, int score) {
-		results.add(new ResultOfCarInARace(car, race, score));
+	public void addResult(ResultOfCarInARace newResult) {
+		results.add(newResult);
 	}
 
 	public ArrayList<ResultOfCarInARace> getResultOfARace(Race race) {

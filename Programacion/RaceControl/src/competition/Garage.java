@@ -36,5 +36,6 @@ public class Garage {
 
 	public void addCar(Car newCar) {
 		cars.add(newCar);
+		newCar.setSticker(this);
 	}
 }

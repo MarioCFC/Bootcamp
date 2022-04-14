@@ -7,7 +7,7 @@ public class Races {
 	private ArrayList<Race> races;
 
 	private Races() {
-		races = new ArrayList<Race>();
+		races = new ArrayList();
 	}
 
 	public static Races getInstance() {
@@ -18,17 +18,10 @@ public class Races {
 	}
 
 
-	public Race newStandarRace(String name, ArrayList<Car> participants, double duration,
-			Tournament eventWichItBelongs) {
-		StandarRace newRace = new StandarRace(name, participants, duration, eventWichItBelongs);
+	public void addRace(Race newRace) {
 		races.add(newRace);
-		return newRace;
 	}
 
 
-	public Race newKnockOutRace(String name, ArrayList<Car> participants, Tournament eventWichItBelongs) {
-		KnockoutRace newRace = new KnockoutRace(name, participants, eventWichItBelongs);
-		races.add(newRace);
-		return newRace;
-	}
+
 }

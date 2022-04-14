@@ -3,10 +3,11 @@ package competition;
 import java.util.ArrayList;
 
 public class Cars {
-	public static Cars carManager = null;
+	private static Cars carManager = null;
 	private ArrayList<Car> cars;
 
 	private Cars() {
+		cars = new ArrayList();
 	}
 
 	public static Cars getInstance() {
@@ -16,8 +17,24 @@ public class Cars {
 		return carManager;
 	}
 
-	public void newCar(String brand, String model) {
-		cars.add(new Car(brand, model));
+	public void addCar(Car newCar) {
+		cars.add(newCar);
+	}
+
+	public Car getCar(int index) {
+		return cars.get(index);
+	}
+
+	public void removeCar(int index) {
+		cars.remove(index);
+	}
+
+	public void removeCar(Car removedCar) {
+		cars.remove(removedCar);
+	}
+
+	public int getNumberOfCars() {
+		return cars.size();
 	}
 
 }

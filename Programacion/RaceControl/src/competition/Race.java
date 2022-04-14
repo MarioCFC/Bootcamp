@@ -1,6 +1,7 @@
 package competition;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 
 //TODO:Implementar la parte de correr y las clasificaciones
@@ -14,25 +15,24 @@ public abstract class Race implements IRun {
 	public static final int KNOCKOUT_RACE = 1;
 
 
-	protected Race(String name, ArrayList<Car> participants, Tournament eventWichItBelongs) {
+	protected Race(String name, ArrayList<Car> participants) {
 		this.name = name;
 		this.participants = participants;
-		this.eventWichItBelongs = eventWichItBelongs;
 	}
 
 	protected String getName() {
 		return name;
 	}
 
-	public Tournament geteventWichItBelongs() {
+	protected Tournament geteventWichItBelongs() {
 		return eventWichItBelongs;
 	}
 
-	public void setEventWichItBelongs(Tournament eventWichItBelongs) {
+	protected void setEventWichItBelongs(Tournament eventWichItBelongs) {
 		this.eventWichItBelongs = eventWichItBelongs;
 	}
 
-	public ArrayList<Car> getParticipants() {
+	protected ArrayList<Car> getParticipants() {
 		return participants;
 	}
 
@@ -45,6 +45,28 @@ public abstract class Race implements IRun {
 		return new ArrayList<Garage>(garages);
 	}
 	
+	protected void sortParticipantsByDistance() {
+		Comparator<Car> comp = new Comparator<Car>() {
+			@Override
+			public int compare(Car car1, Car car2) {
+				return car1.getDistance().compareTo(car2.getDistance());
+			}
+		};
+
+		participants.sort(comp.reversed());
+
+	}
+
+	protected void calculateScore() {
+		sortParticipantsByDistance();
+
+		for (int i = 0, points = 3; i < participants.size(); i++) {
+			raceResultsManager.addResult(new ResultOfCarInARace(participants.get(i), this, points));
+			if (points > 0) {
+				points--;
+			}
+		}
+	}
 
 
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class KnockoutRace extends Race {
 
-	public KnockoutRace(String name, ArrayList<Car> participants, Tournament eventWichItBelongs) {
-		super(name, participants, eventWichItBelongs);
+	public KnockoutRace(String name, ArrayList<Car> participants) {
+		super(name, participants);
 	}
 
 	@Override

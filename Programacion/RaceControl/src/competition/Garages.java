@@ -17,7 +17,23 @@ public class Garages {
 		return garageManager;
 	}
 
-	public void newCar(String name) {
-		garages.add(new Garage(name));
+	public void addGarage(Garage newGarage) {
+		garages.add(newGarage);
+	}
+
+	public Garage getGarage(int index) {
+		return garages.get(index);
+	}
+
+	public void removeGarage(int index) {
+		garages.remove(index);
+	}
+
+	public void removeGarage(Garage removedGarage) {
+		garages.remove(removedGarage);
+	}
+
+	public int getNumberOfGarages() {
+		return garages.size();
 	}
 }
