@@ -2,8 +2,12 @@ package competition;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Races {
+	@JsonIgnore
 	private static Races raceManager = null;
+
 	private ArrayList<Race> races;
 
 	private Races() {

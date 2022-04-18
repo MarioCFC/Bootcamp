@@ -1,10 +1,17 @@
 package competition;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class Garage {
 	private final String name;
-	private HashSet<Car> cars = new HashSet();
+
+	@JsonIdentityReference(alwaysAsId = true)
+	private ArrayList<Car> cars = new ArrayList();
 
 	public Garage(String name) {
 		this.name = name;
@@ -14,7 +21,7 @@ public class Garage {
 		return name;
 	}
 
-	public HashSet<Car> getCars() {
+	public ArrayList<Car> getCars() {
 		return cars;
 	}
 

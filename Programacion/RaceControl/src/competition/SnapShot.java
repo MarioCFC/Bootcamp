@@ -1,18 +1,19 @@
 package competition;
 
-import java.time.LocalDate;
-
 public class SnapShot {
-	private LocalDate lastChange;
+//	private LocalDate lastChange;
 	private Tournaments tournaments;
 	private Garages garages;
 	private Cars cars;
+
 	private Races races;
 	private RacesResults racesResults;
 
+	private SnapShot() {
+	}
 	public SnapShot(Tournaments tournaments, Garages garages, Cars cars, Races races,
 			RacesResults racesResults) {
-		this.lastChange = LocalDate.now();
+//		this.lastChange = LocalDate.now();
 		this.tournaments = tournaments;
 		this.garages = garages;
 		this.cars = cars;
@@ -20,13 +21,12 @@ public class SnapShot {
 		this.racesResults = racesResults;
 	}
 
-	public LocalDate getLastChange() {
-		return lastChange;
-	}
-
-	public void setLastChange(LocalDate lastChange) {
-		this.lastChange = lastChange;
-	}
+	/*
+	 * public LocalDate getLastChange() { return lastChange; }
+	 * 
+	 * public void setLastChange(LocalDate lastChange) { this.lastChange =
+	 * lastChange; }
+	 */
 
 	public Tournaments getTournaments() {
 		return tournaments;

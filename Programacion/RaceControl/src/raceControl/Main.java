@@ -1,5 +1,6 @@
 package raceControl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,6 +39,7 @@ public class Main {
 
 		Garage gar = new Garage("Seat");
 		garages.addGarage(gar);
+		garages.addGarage(new Garage("Renolt"));
 		gar.addCar(cars.getCar(1));
 		gar.addCar(cars.getCar(2));
 		gar.addCar(cars.getCar(3));
@@ -46,28 +48,39 @@ public class Main {
 
 		ArrayList<Garage> gara = new ArrayList();
 		gara.add(gar);
-		
+
 		ArrayList<Car> participants;
 		try {
 			participants = ParticipantsGenerator.generateParticipants(gara);
-			Tournament tor = new Tournament("Try",participants , 10);
+			Tournament tor = new Tournament("Try", participants, 10);
 			tournaments.addTournament(tor);
 
 			KnockoutRace race = new KnockoutRace("RaceTry", participants);
+			KnockoutRace race1 = new KnockoutRace("RaceTry1", participants);
 			races.addRace(race);
+			races.addRace(race1);
 			tor.addRace(race);
+			tor.addRace(race1);
 
+			tor.runRace();
 			tor.runRace();
 			RacesResults result = RacesResults.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		SnapShot state = new SnapShot(tournaments, garages, cars, races, racesResults);
-		
-		ObjectMapper objMap = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-		String result = objMap.writeValueAsString(races);
-		System.out.println(result);
 
+		SnapShot snapShop = new SnapShot(tournaments, garages, cars, races, racesResults);
+
+		/*
+		 * JSONFileManager json = new JSONFileManager(); json.save(state);
+		 */
+
+		ObjectMapper objMap = new ObjectMapper();
+		objMap.setVisibility(PropertyAccessor.FIELD, Visibility.ANY).writerWithDefaultPrettyPrinter()
+				.writeValue(new File("res/StateFile.json"), snapShop);
+		
+		SnapShot snapshop2 = objMap.readValue(new File("res/StateFile.json"), SnapShot.class);
+		System.out.println("a");
 		/*
 		 * boolean interruptor = true; while (interruptor) { showInicialMenu(); switch
 		 * (numberInput.nextInt()) { case 1: System.out.println("Administrar torneos");

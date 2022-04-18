@@ -5,19 +5,30 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import utils.VelocityConversor;
 
-//TODO:Implementar la parte de correr y las clasificaciones
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public abstract class Race implements IRun {
 	protected final String name;
+	@JsonIgnore
 	protected final RacesResults raceResultsManager = RacesResults.getInstance();
+
+	@JsonIdentityReference(alwaysAsId = true)
 	protected Tournament eventWichItBelongs = null;
+
+	@JsonIdentityReference(alwaysAsId = true)
 	protected ArrayList<Car> participants;
 	protected int velocityChangePerMinuteInKmH = 10;
+	@JsonIgnore
 	protected Random rand = new Random();
 
 
-
+	
 	protected Race(String name, ArrayList<Car> participants) {
 		this.name = name;
 		this.participants = participants;

@@ -3,7 +3,10 @@ package competition;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class RacesResults {
+	@JsonIgnore
 	private static RacesResults raceResultManager = null;
 	private ArrayList<ResultOfCarInARace> results;
 

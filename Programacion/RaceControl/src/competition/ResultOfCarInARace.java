@@ -1,15 +1,26 @@
 package competition;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ResultOfCarInARace {
+	private static long nextId = 5;
+
+	private long id;
+
 	private Car car;
 	private Race race;
+
 	private Integer score;
 
 	public ResultOfCarInARace(Car car, Race race, Integer score) {
 		super();
 		this.car = car;
 		this.race = race;
-		this.score = score;
+		this.score = 0;
+		id = nextId++;
 	}
 
 	public Car getCar() {

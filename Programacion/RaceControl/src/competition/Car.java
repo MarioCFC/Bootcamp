@@ -1,5 +1,9 @@
 package competition;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "model")
 public class Car {
 
 	private static final int maxVelocityKmH = 120;
@@ -7,6 +11,7 @@ public class Car {
 	private Double distanceMeters = 0.0;
 	private String brand;
 	private String model;
+
 	private Garage sticker;
 
 	public Car(String brand, String model) {

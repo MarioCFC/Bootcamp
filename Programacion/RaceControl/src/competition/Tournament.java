@@ -5,14 +5,27 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+
 public class Tournament {
 	private String name;
+
+	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Car> participants;
+	@JsonIdentityReference(alwaysAsId = true)
+
 	private ArrayList<Race> races;
 	private static RacesResults resultsManages = null;
 	private int numberOfRaces;
 	private int lastRaceRunned = 0;
 
+	private Tournament() {
+	}
 	public Tournament(String name, ArrayList<Car> participants, int numberOfRaces) {
 		this.name = name;
 		this.participants = participants;
@@ -31,7 +44,7 @@ public class Tournament {
 	}
 
 	public void runRace() {
-		if (races.size() - 1 <= lastRaceRunned) {
+		if (races.size() - 1 >= lastRaceRunned) {
 			races.get(lastRaceRunned++).run();
 		}
 	}
@@ -59,6 +72,7 @@ public class Tournament {
 		return ranking;
 	}
 
+	@JsonIgnore
 	public ArrayList<Entry<Car, Integer>> getPodium() {
 		return (ArrayList<Entry<Car, Integer>>) getPodium().subList(0, 3);
 	}
