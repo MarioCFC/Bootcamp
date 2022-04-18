@@ -23,7 +23,9 @@ public class Car {
 	}
 
 	public void setVelocityKmH(int velocityMetersMin) {
-		this.velocityKmH = velocityMetersMin;
+
+		if (!(velocityMetersMin < 0) && !(velocityMetersMin > maxVelocityKmH))
+			this.velocityKmH = velocityMetersMin;
 	}
 
 	public Double getDistance() {
@@ -37,7 +39,7 @@ public class Car {
 	public String getBrand() {
 		return brand;
 	}
-	
+
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}

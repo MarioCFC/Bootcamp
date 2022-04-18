@@ -10,7 +10,30 @@ public class KnockoutRace extends Race {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 
+		// Precalentamiento
+		for (Car car : participants) {
+			car.setDistance(0.0);
+			car.setVelocityKmH(0);
+
+			for (int i = 0; i < 5; i++) {
+				runRound(car);
+			}
+		}
+
+		sortParticipantsByDistance();
+
+		// Empiza la carrera
+		for (int j = participants.size() - 1; j > 0; j--) {
+
+			for (int i = j; i >= 0; i--) {
+				runRound(participants.get(i));
+			}
+
+			sortParticipantsByDistance();
+		}
+
+		calculateScore();
 	}
+
 }

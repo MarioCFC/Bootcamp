@@ -3,6 +3,9 @@ package competition;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Random;
+
+import utils.VelocityConversor;
 
 //TODO:Implementar la parte de correr y las clasificaciones
 public abstract class Race implements IRun {
@@ -10,9 +13,9 @@ public abstract class Race implements IRun {
 	protected final RacesResults raceResultsManager = RacesResults.getInstance();
 	protected Tournament eventWichItBelongs = null;
 	protected ArrayList<Car> participants;
+	protected int velocityChangePerMinuteInKmH = 10;
+	protected Random rand = new Random();
 
-	public static final int STANDAR_RACE = 0;
-	public static final int KNOCKOUT_RACE = 1;
 
 
 	protected Race(String name, ArrayList<Car> participants) {
@@ -45,6 +48,20 @@ public abstract class Race implements IRun {
 		return new ArrayList<Garage>(garages);
 	}
 	
+	protected void runRound(Car car) {
+
+		int finalVelocityChange = velocityChangePerMinuteInKmH;
+
+		if (rand.nextInt(2) == 0) {
+			finalVelocityChange = -velocityChangePerMinuteInKmH;
+		}
+
+		car.setVelocityKmH(car.getVelocityKmH() + finalVelocityChange);
+
+		double newDistance = car.getDistance() + VelocityConversor.convertKmHToMMin(car.getVelocityKmH());
+		car.setDistance(newDistance);
+	}
+
 	protected void sortParticipantsByDistance() {
 		Comparator<Car> comp = new Comparator<Car>() {
 			@Override
@@ -66,6 +83,19 @@ public abstract class Race implements IRun {
 				points--;
 			}
 		}
+	}
+
+	// TODO:Validar en caso de que haya menos de 3 coches
+	protected ArrayList<ResultOfCarInARace> getPodium() {
+		return (ArrayList<ResultOfCarInARace>) raceResultsManager.getResultOfARace(this).subList(0, 3);
+	}
+
+	protected ArrayList<ResultOfCarInARace> getRanking() {
+		return raceResultsManager.getResultOfARace(this);
+	}
+
+	protected int getCarScore(Car car) {
+		return raceResultsManager.getResultOfCarInARace(this, car);
 	}
 
 

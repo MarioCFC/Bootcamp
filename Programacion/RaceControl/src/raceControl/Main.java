@@ -1,16 +1,23 @@
 package raceControl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import competition.Car;
 import competition.Cars;
 import competition.Garage;
 import competition.Garages;
+import competition.KnockoutRace;
 import competition.Races;
 import competition.RacesResults;
-import competition.StandardRace;
+import competition.SnapShot;
 import competition.Tournament;
+import competition.Tournaments;
 import utils.ParticipantsGenerator;
 
 public class Main {
@@ -21,15 +28,16 @@ public class Main {
 	private static Garages garages = Garages.getInstance();
 	private static Races races = Races.getInstance();
 	private static RacesResults racesResults = RacesResults.getInstance();
+	private static Tournaments tournaments = Tournaments.getInstance();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		for (int i = 0; i < 10; i++) {
 			Car newCar = new Car("brand_" + i, "model_" + i);
 			cars.addCar(newCar);
 		}
 
 		Garage gar = new Garage("Seat");
-
+		garages.addGarage(gar);
 		gar.addCar(cars.getCar(1));
 		gar.addCar(cars.getCar(2));
 		gar.addCar(cars.getCar(3));
@@ -43,18 +51,23 @@ public class Main {
 		try {
 			participants = ParticipantsGenerator.generateParticipants(gara);
 			Tournament tor = new Tournament("Try",participants , 10);
-			StandardRace race = new StandardRace("RaceTry", participants, 180);
+			tournaments.addTournament(tor);
+
+			KnockoutRace race = new KnockoutRace("RaceTry", participants);
 			races.addRace(race);
 			tor.addRace(race);
 
 			tor.runRace();
 			RacesResults result = RacesResults.getInstance();
-			System.out.println();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		SnapShot state = new SnapShot(tournaments, garages, cars, races, racesResults);
 		
-		
+		ObjectMapper objMap = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		String result = objMap.writeValueAsString(races);
+		System.out.println(result);
+
 		/*
 		 * boolean interruptor = true; while (interruptor) { showInicialMenu(); switch
 		 * (numberInput.nextInt()) { case 1: System.out.println("Administrar torneos");
