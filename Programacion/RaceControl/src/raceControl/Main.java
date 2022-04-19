@@ -1,6 +1,7 @@
 package raceControl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import IO.JSONFileManager;
 import competition.Car;
 import competition.Cars;
+import competition.Garage;
 import competition.Garages;
 import competition.Races;
 import competition.RacesResults;
@@ -29,38 +31,41 @@ public class Main {
 	private static RacesResults racesResults;
 
 	public static void main(String[] args) throws IOException {
-
 		loadSnapshot();
 
 		boolean interruptor = true;
 		while (interruptor) {
-			showInicialMenu();
+			System.out.println("1-Administrar torneos \n2-Administrar garajes \n3-Administrar coches \n4-Finalizar");
+
 			switch (numberInput.nextInt()) {
 			case 1:
 				System.out.println("Administrar torneos");
 				break;
 
+			/*
+			 * crearTorneo(); administrarTorneo(); verClasificacion
+			 */
 			case 2:
 				// Menu garages
-				showGaragesMenu();
+				System.out.println("1-Create new garage \n2-Modify existing garage");
 
 				switch (numberInput.nextInt()) {
 
 				case 1:
 					// Crear garaje
-
+					createNewGarage();
 					break;
 
 				case 2:
 					// Modificar un garaje existente
-
+					showModifyGarageOptionMenu();
 					break;
 				}
 
 				break;
 			case 3:
 				// Menu coches
-				showCarsMenu();
+				System.out.println("1-Create new Car \n2-Modify existing car");
 
 				switch (numberInput.nextInt()) {
 				// Crear coche
@@ -76,6 +81,7 @@ public class Main {
 
 				break;
 			case 4:
+				saveSnapShot();
 				interruptor = false;
 				break;
 
@@ -83,6 +89,11 @@ public class Main {
 		}
 
 	}
+
+	/*
+	 * public static void createToutnament() { tournaments.addTournament(new
+	 * Tournament(name, participants, numberOfRaces)); }
+	 */
 
 	public static void loadSnapshot() throws StreamReadException, DatabindException, IOException {
 		try {
@@ -109,66 +120,238 @@ public class Main {
 		jsonManager.save(actualSnapShot);
 	}
 
-	public static void showInicialMenu() {
-		System.out.println("1-Administrar torneos \n2-Administrar garajes \n3-Administrar coches \n4-Finalizar");
+	public static void createNewGarage() {
+		try {
+			System.out.println("Introduce the name:");
+			String name = stringInput.nextLine();
+			garages.addGarage(new Garage(name));
+			System.out.println("A new garage has been created");
+			saveSnapShot();
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error creating the garage");
+		}
+
 	}
 
-	public static void showGaragesMenu() {
-		System.out.println("1-Create new garage \n2-Modify existing garage");
+	public static void showAllGarages() {
+		for (int i = 0; i < garages.getNumberOfGarages(); i++) {
+			System.out.println(i + "-" + garages.getGarage(i).toString());
+		}
+
 	}
 
-	public static void showCarsMenu() {
-		System.out.println("1-Create new Car \n2-Modify existing car");
+	public static void showModifyGarageOptionMenu() {
+
+		if (garages.getNumberOfGarages() > 0) {
+			int indexOfSelectedGarage;
+
+			showAllGarages();
+
+			System.out.println("Chose the garage that you want to change:");
+			indexOfSelectedGarage = numberInput.nextInt();
+
+			Garage modifiedGarage = garages.getGarage(indexOfSelectedGarage);
+			System.out.println("The chosen garage is:\n" + modifiedGarage + "\n");
+
+			System.out.println("1-Modify the name of garage \n2-Add/Remove cars form garage");
+			switch (numberInput.nextInt()) {
+			case 1:
+				modifyingGarageName(modifiedGarage);
+				break;
+
+			case 2:
+				modifyingGarageCars(modifiedGarage);
+				break;
+			}
+		} else {
+			System.out.println("There is no garage to modify");
+		}
+
+	}
+
+	public static void modifyingGarageName(Garage modifiedGarage) {
+		try {
+
+			String newName;
+
+			System.out.println("Introduce the new name:");
+			newName = stringInput.nextLine();
+
+			System.out.println("The garage data will be:\n Name: " + newName + "\nConfirm the changes (1-YES/2-NO): ");
+
+			if (numberInput.nextInt() == 1) {
+				modifiedGarage.setName(newName);
+				System.out.println("Operation completed");
+
+				saveSnapShot();
+
+			} else {
+				System.out.println("There are no garage to modify");
+			}
+
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error changing the name of garage");
+		}
+	}
+
+	// TODO:Cambiar el nombre del método
+	public static void modifyingGarageCars(Garage modifiedGarage) {
+		int indexOfSelectedGarage;
+		boolean thereAreNoCars;
+		String newName;
+
+
+		thereAreNoCars = modifiedGarage.getCars().isEmpty();
+
+		if (thereAreNoCars) {
+			System.out.println("There is no car in the selected garage");
+		} else {
+			showCarsOfAGarage(modifiedGarage);
+		}
+
+		System.out.println("1-Add a car to the garage");
+		if (!thereAreNoCars) {
+			System.out.println("2-Remove a car of the garage");
+		}
+
+		int optionInput = numberInput.nextInt();
+		if (optionInput == 1) {
+			addCarToGarage(modifiedGarage);
+		} else if (optionInput == 2 && !thereAreNoCars) {
+			// Modificar un coche existente
+			removeACarOfTheCarage(modifiedGarage);
+		}
+
+	}
+
+	public static void showCarsOfAGarage(Garage garage) {
+		showDataCarsOfList(garage.getCars());
+	}
+
+	public static void addCarToGarage(Garage garage) {
+
+		try {
+
+			int indexOfSelectedCar;
+			ArrayList<Car> carsWithoutGarage = cars.getCarsWithoutGarage();
+			showDataCarsOfList(carsWithoutGarage);
+
+			System.out.println("Chose the car that you want to add to the garage:");
+			indexOfSelectedCar = numberInput.nextInt();
+
+			Car selectedCar = carsWithoutGarage.get(indexOfSelectedCar);
+			System.out.println("The chosen car is:\n" + selectedCar.toString() + "\n");
+
+			System.out.println("Confirm the changes (1-YES/2-NO): ");
+			if (numberInput.nextInt() == 1) {
+				garage.addCar(selectedCar);
+				System.out.println("Operation completed");
+
+				saveSnapShot();
+			}
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error adding a car to the garage");
+		}
+	}
+
+	public static void removeACarOfTheCarage(Garage garage) {
+		try {
+
+			int indexOfSelectedCar;
+			ArrayList<Car> carsOfTheGarage = garage.getCars();
+			showDataCarsOfList(carsOfTheGarage);
+
+			System.out.println("Chose the car that you want to remove of the garage:");
+			indexOfSelectedCar = numberInput.nextInt();
+
+			Car selectedCar = carsOfTheGarage.get(indexOfSelectedCar);
+			System.out.println("The chosen car is:\n" + selectedCar.toString() + "\n");
+
+			System.out.println("Confirm the changes (1-YES/2-NO): ");
+			if (numberInput.nextInt() == 1) {
+				garage.removeCar(selectedCar);
+				System.out.println("Operation completed");
+
+				saveSnapShot();
+			}
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error removing a car of the garage");
+		}
 	}
 
 	public static void createNewCar() {
-		String brand, model;
 
-		System.out.println("Introduce the brand:");
-		brand = stringInput.nextLine();
-		System.out.println("Introduce the model:");
-		model = stringInput.nextLine();
+		try {
 
-		cars.addCar(new Car(brand, model));
-		System.out.println("A new car has been created");
+			String brand, model;
+
+			System.out.println("Introduce the brand:");
+			brand = stringInput.nextLine();
+			System.out.println("Introduce the model:");
+			model = stringInput.nextLine();
+
+			cars.addCar(new Car(brand, model));
+			System.out.println("A new car has been created");
+			saveSnapShot();
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error creating a new car");
+		}
 	}
 
-	public static void showAllCars() {
-		for (int i = 0; i < cars.getNumberOfCars(); i++) {
-			System.out.println(i + "-" + cars.getCar(i).toString());
+	public static void showDataCarsOfList(java.util.List<Car> cars) {
+		for (int i = 0; i < cars.size(); i++) {
+			System.out.println(i + "-" + cars.get(i).toString());
 		}
 	}
 
 	public static void modifyingCar() {
-		int indexOfSelectedCar;
-		String newBrand, newModel;
-		Car modifiedCar;
 
-		if (cars.getNumberOfCars() > 0) {
+		try {
+			int indexOfSelectedCar;
+			String newBrand, newModel;
+			Car modifiedCar;
 
-			showAllCars();
+			if (cars.getNumberOfCars() > 0) {
 
-			System.out.println("Chose the car that you want to change:");
-			indexOfSelectedCar = numberInput.nextInt();
+				showDataCarsOfList(cars.getAll());
 
-			modifiedCar = cars.getCar(indexOfSelectedCar);
-			System.out.println("The chosen car is:\n" + modifiedCar + "\n");
+				System.out.println("Chose the car that you want to change:");
+				indexOfSelectedCar = numberInput.nextInt();
 
-			System.out.println("Introduce the new brand:");
-			newBrand = stringInput.nextLine();
-			System.out.println("Introduce the new model:");
-			newModel = stringInput.nextLine();
+				modifiedCar = cars.getCar(indexOfSelectedCar);
+				System.out.println("The chosen car is:\n" + modifiedCar.toString() + "\n");
 
-			System.out.println("The data car will be:\n Brand: " + newBrand + " - Model: " + newModel
-					+ "\nConfirm the changes (1-YES/2-NO): ");
+				System.out.println("Introduce the new brand:");
+				newBrand = stringInput.nextLine();
+				System.out.println("Introduce the new model:");
+				newModel = stringInput.nextLine();
 
-			if (numberInput.nextInt() == 1) {
-				modifiedCar.setBrand(newBrand);
-				modifiedCar.setModel(newModel);
-				System.out.println("Operation completed");
+				System.out.println("The data car will be:\n Brand: " + newBrand + " - Model: " + newModel
+						+ "\nConfirm the changes (1-YES/2-NO): ");
+
+				if (numberInput.nextInt() == 1) {
+					modifiedCar.setBrand(newBrand);
+					modifiedCar.setModel(newModel);
+					System.out.println("Operation completed");
+					saveSnapShot();
+				}
+			} else {
+				System.out.println("There are no car to modify");
 			}
-		} else {
-			System.out.println("There are no car to modify");
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error modifying a car");
 		}
 	}
 

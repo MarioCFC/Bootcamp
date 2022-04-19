@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ResultOfCarInARace {
-	private static long nextId = 5;
+	private static long nextId = 1;
 
 	private long id;
 

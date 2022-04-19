@@ -28,6 +28,12 @@ public class Cars {
 		return cars.get(index);
 	}
 
+	// No borrar o empieza a haber duplicados en el array
+	@JsonIgnore
+	public ArrayList<Car> getAll(){
+		return cars;
+	}
+
 	public void removeCar(int index) {
 		cars.remove(index);
 	}
@@ -40,6 +46,19 @@ public class Cars {
 	@JsonIgnore
 	public int getNumberOfCars() {
 		return cars.size();
+	}
+
+	@JsonIgnore
+	public ArrayList<Car> getCarsWithoutGarage() {
+		ArrayList<Car> carsWithoutGarage = new ArrayList<Car>();
+
+		for (Car car : cars) {
+			if (car.getSticker() == null) {
+				carsWithoutGarage.add(car);
+			}
+		}
+
+		return carsWithoutGarage;
 	}
 
 }

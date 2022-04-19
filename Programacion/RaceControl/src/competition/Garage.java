@@ -25,6 +25,10 @@ public class Garage {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public ArrayList<Car> getCars() {
 		return cars;
 	}
@@ -44,11 +48,14 @@ public class Garage {
 		}
 		throw new Exception("Index error");
 
-
 	}
 
 	public void addCar(Car newCar) {
 		cars.add(newCar);
 		newCar.setSticker(this);
+	}
+
+	public void removeCar(Car removedCar) {
+		cars.remove(removedCar);
 	}
 }
