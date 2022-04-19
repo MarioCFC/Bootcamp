@@ -21,11 +21,12 @@ public class Races {
 		return raceManager;
 	}
 
+	public void setRaces(ArrayList<Race> races) {
+		this.races = races;
+	}
 
 	public void addRace(Race newRace) {
 		races.add(newRace);
 	}
-
-
 
 }

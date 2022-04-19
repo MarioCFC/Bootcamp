@@ -2,12 +2,18 @@ package competition;
 
 import java.util.ArrayList;
 
-public class Tournaments {
-	private static Tournaments tournamentManager = null;
-	private ArrayList<Tournament> tournaments;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
+public class Tournaments {
+	@JsonIgnore
+	private static Tournaments tournamentManager = null;
+
+	private ArrayList<Tournament> tournaments = new ArrayList();;
+
+	
 	private Tournaments() {
-		tournaments = new ArrayList();
 	}
 
 	public static Tournaments getInstance() {
@@ -15,6 +21,10 @@ public class Tournaments {
 			tournamentManager = new Tournaments();
 		}
 		return tournamentManager;
+	}
+
+	public void setTournaments(ArrayList<Tournament> tournaments) {
+		this.tournaments = tournaments;
 	}
 
 	public void addTournament(Tournament newTournament) {
@@ -33,6 +43,8 @@ public class Tournaments {
 		tournaments.remove(removedTournament);
 	}
 
+	// TODO:Cambiar
+	@JsonIgnore
 	public int getNumberOfTournaments() {
 		return tournaments.size();
 	}

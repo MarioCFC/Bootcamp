@@ -8,13 +8,16 @@ import java.util.Random;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import utils.VelocityConversor;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+
 public abstract class Race implements IRun {
-	protected final String name;
+	protected String name;
 	@JsonIgnore
 	protected final RacesResults raceResultsManager = RacesResults.getInstance();
 
@@ -27,8 +30,9 @@ public abstract class Race implements IRun {
 	@JsonIgnore
 	protected Random rand = new Random();
 
+	protected Race() {
+	}
 
-	
 	protected Race(String name, ArrayList<Car> participants) {
 		this.name = name;
 		this.participants = participants;
@@ -58,7 +62,7 @@ public abstract class Race implements IRun {
 
 		return new ArrayList<Garage>(garages);
 	}
-	
+
 	protected void runRound(Car car) {
 
 		int finalVelocityChange = velocityChangePerMinuteInKmH;
@@ -108,6 +112,5 @@ public abstract class Race implements IRun {
 	protected int getCarScore(Car car) {
 		return raceResultsManager.getResultOfCarInARace(this, car);
 	}
-
 
 }

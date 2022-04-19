@@ -15,6 +15,9 @@ public class ResultOfCarInARace {
 
 	private Integer score;
 
+	private ResultOfCarInARace() {
+	}
+
 	public ResultOfCarInARace(Car car, Race race, Integer score) {
 		super();
 		this.car = car;

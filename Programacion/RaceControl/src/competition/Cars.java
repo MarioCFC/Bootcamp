@@ -2,7 +2,10 @@ package competition;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Cars {
+	@JsonIgnore
 	private static Cars carManager = null;
 	private ArrayList<Car> cars;
 
@@ -33,6 +36,8 @@ public class Cars {
 		cars.remove(removedCar);
 	}
 
+	// TODO:Cambiar
+	@JsonIgnore
 	public int getNumberOfCars() {
 		return cars.size();
 	}

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class KnockoutRace extends Race {
 
+	private KnockoutRace() {
+	}
+
 	public KnockoutRace(String name, ArrayList<Car> participants) {
 		super(name, participants);
 	}

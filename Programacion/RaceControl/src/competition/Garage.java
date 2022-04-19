@@ -4,14 +4,18 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class Garage {
-	private final String name;
+	private String name;
 
 	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Car> cars = new ArrayList();
+
+	private Garage() {
+	}
 
 	public Garage(String name) {
 		this.name = name;
@@ -25,6 +29,8 @@ public class Garage {
 		return cars;
 	}
 
+	// TODO:Cambiar
+	@JsonIgnore
 	public int getNumeberOfCars() {
 		return cars.size();
 	}

@@ -1,175 +1,88 @@
 {
   "tournaments" : {
-    "tournaments" : [ {
-      "name" : "Try",
-      "participants" : [ "model_3", "model_4", "model_5", "model_2", "model_1" ],
-      "races" : [ "RaceTry", "RaceTry1" ],
-      "numberOfRaces" : 10,
-      "lastRaceRunned" : 2,
-      "ranking" : [ {
-        "Brand: brand_2 - Model: model_2" : 0
-      }, {
-        "Brand: brand_1 - Model: model_1" : 0
-      }, {
-        "Brand: brand_3 - Model: model_3" : 0
-      }, {
-        "Brand: brand_4 - Model: model_4" : 0
-      }, {
-        "Brand: brand_5 - Model: model_5" : 0
-      } ]
-    } ],
-    "numberOfTournaments" : 1
+    "@class" : "competition.Tournaments",
+    "tournaments" : [ ]
   },
   "garages" : {
-    "garages" : [ {
-      "name" : "Seat",
-      "cars" : [ "model_1", "model_2", "model_3", "model_4", "model_5" ],
-      "numeberOfCars" : 5
-    }, {
-      "name" : "Renolt",
-      "cars" : [ ],
-      "numeberOfCars" : 0
-    } ],
-    "numberOfGarages" : 2
+    "garages" : [ ]
   },
   "cars" : {
     "cars" : [ {
-      "model" : "model_0",
+      "model" : "model0",
       "velocityKmH" : 0,
       "distanceMeters" : 0.0,
-      "brand" : "brand_0",
+      "brand" : "brand0",
       "sticker" : null,
       "distance" : 0.0
     }, {
-      "model" : "model_1",
-      "velocityKmH" : 0,
-      "distanceMeters" : 332.0,
-      "brand" : "brand_1",
-      "sticker" : "Seat",
-      "distance" : 332.0
-    }, {
-      "model" : "model_2",
-      "velocityKmH" : 20,
-      "distanceMeters" : 831.0,
-      "brand" : "brand_2",
-      "sticker" : "Seat",
-      "distance" : 831.0
-    }, {
-      "model" : "model_3",
-      "velocityKmH" : 10,
-      "distanceMeters" : 3163.0,
-      "brand" : "brand_3",
-      "sticker" : "Seat",
-      "distance" : 3163.0
-    }, {
-      "model" : "model_4",
-      "velocityKmH" : 20,
-      "distanceMeters" : 1997.0,
-      "brand" : "brand_4",
-      "sticker" : "Seat",
-      "distance" : 1997.0
-    }, {
-      "model" : "model_5",
-      "velocityKmH" : 20,
-      "distanceMeters" : 1164.0,
-      "brand" : "brand_5",
-      "sticker" : "Seat",
-      "distance" : 1164.0
-    }, {
-      "model" : "model_6",
+      "model" : "model1",
       "velocityKmH" : 0,
       "distanceMeters" : 0.0,
-      "brand" : "brand_6",
+      "brand" : "brand1",
       "sticker" : null,
       "distance" : 0.0
     }, {
-      "model" : "model_7",
+      "model" : "model2",
       "velocityKmH" : 0,
       "distanceMeters" : 0.0,
-      "brand" : "brand_7",
+      "brand" : "brand2",
       "sticker" : null,
       "distance" : 0.0
     }, {
-      "model" : "model_8",
+      "model" : "model3",
       "velocityKmH" : 0,
       "distanceMeters" : 0.0,
-      "brand" : "brand_8",
+      "brand" : "brand3",
       "sticker" : null,
       "distance" : 0.0
     }, {
-      "model" : "model_9",
+      "model" : "model4",
       "velocityKmH" : 0,
       "distanceMeters" : 0.0,
-      "brand" : "brand_9",
+      "brand" : "brand4",
       "sticker" : null,
       "distance" : 0.0
-    } ],
-    "numberOfCars" : 10
+    }, {
+      "model" : "model5",
+      "velocityKmH" : 0,
+      "distanceMeters" : 0.0,
+      "brand" : "brand5",
+      "sticker" : null,
+      "distance" : 0.0
+    }, {
+      "model" : "model6",
+      "velocityKmH" : 0,
+      "distanceMeters" : 0.0,
+      "brand" : "brand6",
+      "sticker" : null,
+      "distance" : 0.0
+    }, {
+      "model" : "model7",
+      "velocityKmH" : 0,
+      "distanceMeters" : 0.0,
+      "brand" : "brand7",
+      "sticker" : null,
+      "distance" : 0.0
+    }, {
+      "model" : "model8",
+      "velocityKmH" : 0,
+      "distanceMeters" : 0.0,
+      "brand" : "brand8",
+      "sticker" : null,
+      "distance" : 0.0
+    }, {
+      "model" : "model9",
+      "velocityKmH" : 0,
+      "distanceMeters" : 0.0,
+      "brand" : "brand9",
+      "sticker" : null,
+      "distance" : 0.0
+    } ]
   },
   "races" : {
-    "races" : [ {
-      "name" : "RaceTry",
-      "eventWichItBelongs" : "Try",
-      "participants" : [ "model_3", "model_4", "model_5", "model_2", "model_1" ],
-      "velocityChangePerMinuteInKmH" : 10
-    }, {
-      "name" : "RaceTry1",
-      "eventWichItBelongs" : "Try",
-      "participants" : [ "model_3", "model_4", "model_5", "model_2", "model_1" ],
-      "velocityChangePerMinuteInKmH" : 10
-    } ]
+    "races" : [ ]
   },
   "racesResults" : {
-    "results" : [ {
-      "id" : 5,
-      "car" : "model_2",
-      "race" : "RaceTry",
-      "score" : 0
-    }, {
-      "id" : 6,
-      "car" : "model_1",
-      "race" : "RaceTry",
-      "score" : 0
-    }, {
-      "id" : 7,
-      "car" : "model_3",
-      "race" : "RaceTry",
-      "score" : 0
-    }, {
-      "id" : 8,
-      "car" : "model_5",
-      "race" : "RaceTry",
-      "score" : 0
-    }, {
-      "id" : 9,
-      "car" : "model_4",
-      "race" : "RaceTry",
-      "score" : 0
-    }, {
-      "id" : 10,
-      "car" : "model_3",
-      "race" : "RaceTry1",
-      "score" : 0
-    }, {
-      "id" : 11,
-      "car" : "model_4",
-      "race" : "RaceTry1",
-      "score" : 0
-    }, {
-      "id" : 12,
-      "car" : "model_5",
-      "race" : "RaceTry1",
-      "score" : 0
-    }, {
-      "id" : 13,
-      "car" : "model_2",
-      "race" : "RaceTry1",
-      "score" : 0
-    }, {
-      "id" : 14,
-      "car" : "model_1",
-      "race" : "RaceTry1",
-      "score" : 0
-    } ]
+    "results" : [ ]
   }
 }

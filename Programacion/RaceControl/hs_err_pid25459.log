@@ -1,0 +1,21 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f75b0e96d8b, pid=25459, tid=25475
+#
+# JRE version: OpenJDK Runtime Environment (11.0.15+3) (build 11.0.15+3)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.15+3, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x2d8b]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h" (or dumping to /home/mario/Escritorio/Bootcamp/Programacion/RaceControl/core.25459)
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:34433 -javaagent:/home/mario/.eclipse/197455291_linux_gtk_x86_64/configuration/org.eclipse.osgi/222/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=UTF-8 raceControl.Main
+
+Host: 

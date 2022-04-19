@@ -14,6 +14,9 @@ public class Car {
 
 	private Garage sticker;
 
+	private Car() {
+	}
+
 	public Car(String brand, String model) {
 		this.brand = brand;
 		this.model = model;

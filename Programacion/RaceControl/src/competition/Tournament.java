@@ -8,17 +8,19 @@ import java.util.Map.Entry;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
+//TODO:Recordar la introduccion del número de carreras
 public class Tournament {
 	private String name;
 
 	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Car> participants;
-	@JsonIdentityReference(alwaysAsId = true)
 
+	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Race> races;
 	private static RacesResults resultsManages = null;
 	private int numberOfRaces;
@@ -26,6 +28,7 @@ public class Tournament {
 
 	private Tournament() {
 	}
+
 	public Tournament(String name, ArrayList<Car> participants, int numberOfRaces) {
 		this.name = name;
 		this.participants = participants;
@@ -51,6 +54,8 @@ public class Tournament {
 
 	// HashMap que almacena las puntuaciones luego se guardan las parejas en un
 	// ArrayList que se ordena
+	// TODO:Cambiar
+	@JsonIgnore
 	public ArrayList getRanking() {
 		HashMap<Car, Integer> tempRanking = new HashMap();
 		for (Race race : races) {
@@ -72,6 +77,7 @@ public class Tournament {
 		return ranking;
 	}
 
+	// TODO:Cambiar
 	@JsonIgnore
 	public ArrayList<Entry<Car, Integer>> getPodium() {
 		return (ArrayList<Entry<Car, Integer>>) getPodium().subList(0, 3);

@@ -2,8 +2,12 @@ package competition;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Garages {
+	@JsonIgnore
 	public static Garages garageManager = null;
+
 	private ArrayList<Garage> garages;
 
 	private Garages() {
@@ -15,6 +19,10 @@ public class Garages {
 			garageManager = new Garages();
 		}
 		return garageManager;
+	}
+
+	public void setGarages(ArrayList<Garage> garages) {
+		this.garages = garages;
 	}
 
 	public void addGarage(Garage newGarage) {
@@ -33,6 +41,8 @@ public class Garages {
 		garages.remove(removedGarage);
 	}
 
+	// TODO:Cambiar
+	@JsonIgnore
 	public int getNumberOfGarages() {
 		return garages.size();
 	}
