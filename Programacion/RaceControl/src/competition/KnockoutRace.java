@@ -37,6 +37,7 @@ public class KnockoutRace extends Race {
 		}
 
 		calculateScore();
+		finish();
 	}
 
 }

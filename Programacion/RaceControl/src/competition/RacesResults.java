@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class RacesResults {
 	@JsonIgnore
 	private static RacesResults raceResultManager = null;
-	private ArrayList<ResultOfCarInARace> results;
+	private ArrayList<ScoreOfCarInARace> results;
 
 	private RacesResults() {
 		results = new ArrayList();
@@ -21,14 +21,24 @@ public class RacesResults {
 		return raceResultManager;
 	}
 
-	public void addResult(ResultOfCarInARace newResult) {
+	public void addResult(ScoreOfCarInARace newResult) {
 		results.add(newResult);
 	}
 
-	public ArrayList<ResultOfCarInARace> getResultOfARace(Race race) {
-		ArrayList<ResultOfCarInARace> raceResult = new ArrayList();
+	@JsonIgnore
+	public static RacesResults getRaceResultManager() {
+		return raceResultManager;
+	}
 
-		for (ResultOfCarInARace carResultInRace : results) {
+	// TODO:Quitar pudiendo crear los Score necesarios
+	public static void setRaceResultManager(RacesResults raceResultManager) {
+		RacesResults.raceResultManager = raceResultManager;
+	}
+
+	public ArrayList<ScoreOfCarInARace> getResultOfARace(Race race) {
+		ArrayList<ScoreOfCarInARace> raceResult = new ArrayList();
+
+		for (ScoreOfCarInARace carResultInRace : results) {
 			if (carResultInRace.getRace().equals(race))
 				raceResult.add(carResultInRace);
 		}
@@ -37,10 +47,10 @@ public class RacesResults {
 
 	}
 
-	public ArrayList<ResultOfCarInARace> getResultOfACar(Car car) {
-		ArrayList<ResultOfCarInARace> carResults = new ArrayList();
+	public ArrayList<ScoreOfCarInARace> getResultOfACar(Car car) {
+		ArrayList<ScoreOfCarInARace> carResults = new ArrayList();
 
-		for (ResultOfCarInARace carResultInRace : results) {
+		for (ScoreOfCarInARace carResultInRace : results) {
 			if (carResultInRace.getCar().equals(car))
 				carResults.add(carResultInRace);
 		}
@@ -50,7 +60,7 @@ public class RacesResults {
 	}
 
 	public int getResultOfCarInARace(Race race, Car car) {
-		for (ResultOfCarInARace carResultInRace : results) {
+		for (ScoreOfCarInARace carResultInRace : results) {
 			if (carResultInRace.getRace().equals(race) && carResultInRace.getCar().equals(car))
 				return carResultInRace.getScore();
 		}
@@ -58,14 +68,68 @@ public class RacesResults {
 		return -1;
 	}
 
-	public void sortResultsList(ArrayList<ResultOfCarInARace> sortedList) {
-		Comparator<ResultOfCarInARace> resultComparator = new Comparator<ResultOfCarInARace>() {
+	public ArrayList<ScoreOfCar> getResultsOfTournament(Tournament tournament) {
+		ArrayList<ScoreOfCar> tournamentRanking = new ArrayList<ScoreOfCar>();
+
+		for (ScoreOfCarInARace scoreOfCarInARace : results) {
+
+			if (tournament.getRaces().contains(scoreOfCarInARace.getRace())) {
+
+				ScoreOfCar actualScore = indexOfByCarObject(tournamentRanking, scoreOfCarInARace.getCar());
+				if (actualScore != null) {
+					actualScore.setScore(actualScore.getScore() + scoreOfCarInARace.getScore());
+					actualScore.setTotalDistance(actualScore.getTotalDistance() + scoreOfCarInARace.getTotalDistance());
+				} else {
+					actualScore = new ScoreOfCar(scoreOfCarInARace.getCar(), scoreOfCarInARace.getScore(),
+							scoreOfCarInARace.getTotalDistance());
+				}
+			}
+		}
+
+		sortTournamentRanking(tournamentRanking);
+		return tournamentRanking;
+	}
+
+	private ScoreOfCar indexOfByCarObject(ArrayList<ScoreOfCar> tournamentRanking, Car car) {
+		for (ScoreOfCar scoreOfCar : tournamentRanking) {
+			if (scoreOfCar.getCar() == car) {
+				return scoreOfCar;
+			}
+		}
+		return null;
+	}
+
+	public void sortResultsList(ArrayList<ScoreOfCarInARace> sortedList) {
+		Comparator<ScoreOfCarInARace> resultComparator = new Comparator<ScoreOfCarInARace>() {
 			@Override
-			public int compare(ResultOfCarInARace o1, ResultOfCarInARace o2) {
-				return o1.getScore().compareTo(o2.getScore());
+			public int compare(ScoreOfCarInARace o1, ScoreOfCarInARace o2) {
+				int resultOfCompare = o1.getScore().compareTo(o2.getScore());
+
+				if (resultOfCompare == 0) {
+					resultOfCompare = o1.getTotalDistance().compareTo(o2.getTotalDistance());
+				}
+				return resultOfCompare;
 			}
 		};
 
 		sortedList.sort(resultComparator.reversed());
 	}
+
+	// TODO:Arreglar
+	public void sortTournamentRanking(ArrayList<ScoreOfCar> sortedList) {
+		Comparator<ScoreOfCar> resultComparator = new Comparator<ScoreOfCar>() {
+			@Override
+			public int compare(ScoreOfCar o1, ScoreOfCar o2) {
+				int resultOfCompare = o1.getScore().compareTo(o2.getScore());
+
+				if (resultOfCompare == 0) {
+					resultOfCompare = o1.getTotalDistance().compareTo(o2.getTotalDistance());
+				}
+				return resultOfCompare;
+			}
+		};
+
+		sortedList.sort(resultComparator.reversed());
+	}
+
 }

@@ -12,9 +12,14 @@ import competition.Car;
 import competition.Cars;
 import competition.Garage;
 import competition.Garages;
+import competition.KnockoutRace;
+import competition.Race;
 import competition.Races;
 import competition.RacesResults;
+import competition.ScoreOfCar;
+import competition.ScoreOfCarInARace;
 import competition.SnapShot;
+import competition.StandardRace;
 import competition.Tournament;
 import competition.Tournaments;
 import utils.ParticipantsGenerator;
@@ -45,14 +50,13 @@ public class Main {
 				System.out.println("1-Create new tournament \n2-Modify existing tournament");
 				switch (numberInput.nextInt()) {
 				case 1:
-					// Crear garaje
+					// Crear torneo
 					createNewTournament();
 					break;
 
 				case 2:
-					// Modificar un garaje existente
+					// Gestionar torneos
 					modifyExistingTournament();
-					;
 					break;
 				}
 				break;
@@ -98,6 +102,7 @@ public class Main {
 			case 4:
 				saveSnapShot();
 				interruptor = false;
+				System.out.println("Session finished");
 				break;
 
 			}
@@ -116,6 +121,7 @@ public class Main {
 			racesResults = actualSnapShot.getRacesResults();
 
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			tournaments = Tournaments.getInstance();
 			garages = Garages.getInstance();
 			cars = Cars.getInstance();
@@ -365,28 +371,33 @@ public class Main {
 	}
 
 	public static void createNewTournament() {
-		String name;
-		int raceNumber;
+		try {
 
-		if (!garages.getGarageWithCars().isEmpty()) {
+			String name;
+			int raceNumber;
 
-			System.out.println("Introduce the name:");
-			name = stringInput.nextLine();
-			System.out.println("Introduce the model:");
-			raceNumber = stringInput.nextInt();
+			if (!garages.getGarageWithCars().isEmpty()) {
 
-			chooseParticipatingGarages();
+				System.out.println("Introduce the name:");
+				name = stringInput.nextLine();
+				System.out.println("Introduce the number of races:");
+				raceNumber = stringInput.nextInt();
 
-			Tournament newTournament = new Tournament(name,
-					ParticipantsGenerator.generateParticipants(chooseParticipatingGarages()), raceNumber);
+				Tournament newTournament = new Tournament(name,
+						ParticipantsGenerator.generateParticipants(chooseParticipatingGarages()), raceNumber);
 
-			tournaments.addTournament(newTournament);
+				tournaments.addTournament(newTournament);
+				saveSnapShot();
 
-		} else {
-			System.out.println(
-					"There are no garages or these do not have cars to participate , create some garage or add some car to the gaarages ");
+			} else {
+				System.out.println(
+						"There are no garages or these do not have cars to participate , create some garage or add some car to the gaarages ");
+			}
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error creating the tournament");
 		}
-
 	};
 
 	public static ArrayList<Garage> chooseParticipatingGarages() {
@@ -399,7 +410,7 @@ public class Main {
 
 		showGaragesOfAList(possibleGarage);
 
-		System.out.println("Introduce de index of selected car, -1 ends");
+		System.out.println("Introduce the index of selected garage, -1 ends");
 		while (true) {
 			inputIndex = numberInput.nextInt();
 
@@ -415,7 +426,8 @@ public class Main {
 
 				if (numberInput.nextInt() == 1) {
 					garagesParticipants.add(selectedGarage);
-					System.out.println("Operation completed");
+					System.out.println("Garage added \nIntroduce another index, -1 ends");
+
 				}
 
 			} else if (inputIndex == -1 && garagesParticipants.isEmpty()) {
@@ -430,7 +442,7 @@ public class Main {
 	public static void modifyExistingTournament() {
 		if (!tournaments.getAll().isEmpty()) {
 			System.out.println(
-					"1-Add a new race to a tournament \n2-Run the next race in a tournament \3-View the ranking o a tournament");
+					"1-Add a new race to a tournament \n2-Run the next race in a tournament \n3-View the ranking o a tournament");
 
 			switch (numberInput.nextInt()) {
 			case 1:
@@ -438,10 +450,10 @@ public class Main {
 				break;
 
 			case 2:
-
+				runRaceOfUnfinishedTournament();
 				break;
 			case 3:
-
+				showTournamentRanKing();
 				break;
 
 			}
@@ -455,42 +467,126 @@ public class Main {
 	}
 
 	public static void createARaceInTournament() {
-		int indexOfSelectedTournament;
-		Tournament selectedTournament;
 
-		ArrayList<Tournament> unFinishedTournaments = tournaments.getTournamentByState(false);
-		if (!unFinishedTournaments.isEmpty()) {
-			showTournamentsOfAList(unFinishedTournaments);
+		try {
 
-			System.out.println("Chose the tournament wich you want to add  a new race:");
-			indexOfSelectedTournament = numberInput.nextInt();
+			int indexOfSelectedTournament;
+			Tournament selectedTournament;
 
-			selectedTournament = unFinishedTournaments.get(indexOfSelectedTournament);
-			System.out.println("The chosen tournament is:\n" + selectedTournament.toString() + "\n");
-			// Seguimos con las carreras aqui
+			ArrayList<Tournament> unFinishedTournaments = tournaments.getTournamentsThatCanAddNewRaces();
 
+			if ((selectedTournament = chooseTournamentOfAList(unFinishedTournaments)) != null) {
+
+				selectedTournament.addRace(createNewRace(selectedTournament.getParticipants()));
+				System.out.println("Race added to the tournament");
+				saveSnapShot();
+			} else {
+				System.out.println("There are no tournamet to add new race");
+			}
+
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			// TODO:Quitar
+			System.out.println(ex.getMessage());
+			System.out.println("Error creating the race");
 		}
 	}
 
-	public static void createNewRace(ArrayList<Car> raceParticipants) {
+	public static Race createNewRace(ArrayList<Car> raceParticipants) throws Exception {
 		String name;
-		int 
+		int hours;
+		Race newRace = null;
+
 		System.out.println("Introduce the name: ");
 		name = stringInput.nextLine();
 
 		System.out.println("Choose the type of the new race \n1-Standar race \n2-KnockOut race");
 		switch (numberInput.nextInt()) {
-		// Crear coche
+
+		// Crear carrera
 		case 1:
 			System.out.println("Introduce the duration in hours");
-			
-			break;
+			hours = numberInput.nextInt();
 
+			newRace = new StandardRace(name, raceParticipants, hours * 60);
+			break;
 		case 2:
-			// Modificar un coche existente
-			modifyingCar();
+			newRace = new KnockoutRace(name, raceParticipants);
 			break;
 		}
-		
+
+		races.addRace(newRace);
+		return newRace;
+
+	}
+
+	public static void runRaceOfUnfinishedTournament() {
+		try {
+			Tournament selectedTournament;
+			ArrayList<Tournament> unfinishedTournaments = tournaments.getTounamentsThatCanRunNextRace();
+
+			if ((selectedTournament = chooseTournamentOfAList(unfinishedTournaments)) != null) {
+				Race runnedRace = selectedTournament.getNextRaceToRun();
+				runnedRace.run();
+				saveSnapShot();
+				ArrayList<ScoreOfCarInARace> raceRanking = racesResults.getResultOfARace(runnedRace);
+
+				System.out.println("The ranking of the race is:");
+				for (int i = 0; i < raceRanking.size(); i++) {
+					System.out.println((i + 1) + raceRanking.get(i).toString());
+				}
+
+			} else {
+				System.out.println("There are no tournament that have more race to run");
+			}
+
+		} catch (IOException e) {
+			System.out.println("Error saving the files");
+		} catch (Exception ex) {
+			System.out.println("Error runnin the race");
+		}
+	}
+
+	public static void showTournamentRanKing() {
+		try {
+
+			int indexOfSelectedTournament;
+			Tournament selectedTournament;
+
+			ArrayList<Tournament> unFinishedTournaments = tournaments.getTournamentsByState(true);
+
+			if ((selectedTournament = chooseTournamentOfAList(unFinishedTournaments)) != null) {
+				ArrayList<ScoreOfCar> tournamentRanking = racesResults.getResultsOfTournament(selectedTournament);
+
+				System.out.println("The ranking of tounament is:");
+				for (int i = 0; i < tournamentRanking.size(); i++) {
+					System.out.println((i + 1) + "-" + tournamentRanking.get(i).toString());
+				}
+
+			} else {
+				System.out.println("There are no finished tournaments to see the ranking");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error creating new race");
+		}
+	}
+
+	public static Tournament chooseTournamentOfAList(ArrayList<Tournament> tournaments) {
+		int indexOfSelectedTournament;
+		Tournament selectedTournament;
+
+		if (!tournaments.isEmpty()) {
+			showTournamentsOfAList(tournaments);
+
+			System.out.println("Chose the tournament wich you want to run next race:");
+			indexOfSelectedTournament = numberInput.nextInt();
+
+			return selectedTournament = tournaments.get(indexOfSelectedTournament);
+
+		}
+
+		return null;
 	}
 }

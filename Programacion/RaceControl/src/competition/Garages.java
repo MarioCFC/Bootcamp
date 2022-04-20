@@ -55,7 +55,7 @@ public class Garages {
 	@JsonIgnore
 	public ArrayList<Garage> getGarageWithCars() {
 		ArrayList<Garage> garageWithCars = new ArrayList<Garage>();
-		for (Garage garage : garageWithCars) {
+		for (Garage garage : garages) {
 			if (!garage.getCars().isEmpty()) {
 				garageWithCars.add(garage);
 			}

@@ -1,37 +1,49 @@
 {
   "tournaments" : {
-    "@class" : "competition.Tournaments",
     "tournaments" : [ {
-      "@class" : "competition.Tournament",
-      "name" : "Torneo Prueba",
-      "races" : [ ],
-      "numberOfRaces" : 10,
-      "lastRaceRunned" : 0
+      "id" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
+      "name" : "tor",
+      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
+      "races" : [ "sdfsa", "fgdss" ],
+      "numberLimitOfRaces" : 10,
+      "lastRaceRunned" : 2
     } ]
   },
   "garages" : {
     "garages" : [ {
-      "name" : "Seat",
-      "cars" : [ 0 ]
+      "id" : "e6980da5-c6a8-4c2b-a98f-d5fd1bbd7c73",
+      "name" : "sdfsdf",
+      "cars" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ]
     } ]
   },
   "cars" : {
     "cars" : [ {
-      "id" : 0,
-      "velocityKmH" : 0,
-      "distanceMeters" : 127777.0,
-      "brand" : "brand",
-      "model" : "model1",
-      "sticker" : "Seat",
-      "distance" : 127777.0
+      "id" : "c4587fb0-0f1a-429a-8853-74bf2cde8e2f",
+      "velocityKmH" : 100,
+      "distanceMeters" : 176608.0,
+      "brand" : "bgfgdsa",
+      "model" : "tujyrs",
+      "sticker" : "e6980da5-c6a8-4c2b-a98f-d5fd1bbd7c73",
+      "distance" : 176608.0
     } ]
   },
   "races" : {
     "races" : [ {
       "@class" : "competition.StandardRace",
-      "name" : "1-Carrera estandar",
-      "eventWichItBelongs" : null,
-      "participants" : [ 0 ],
+      "name" : "sdfsa",
+      "id" : "4ffef24c-e262-4a5f-8f86-d1ea3f64ba5b",
+      "finished" : true,
+      "eventWichItBelongs" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
+      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
+      "velocityChangePerMinuteInKmH" : 10,
+      "durationInMin" : 1800
+    }, {
+      "@class" : "competition.StandardRace",
+      "name" : "fgdss",
+      "id" : "9f7fa3ff-e6c1-429f-b792-0eca6a64dca8",
+      "finished" : true,
+      "eventWichItBelongs" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
+      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
       "velocityChangePerMinuteInKmH" : 10,
       "durationInMin" : 180
     } ]

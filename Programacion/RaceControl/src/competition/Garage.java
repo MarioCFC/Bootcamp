@@ -1,15 +1,17 @@
 package competition;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Garage {
 	private String name;
+	private String id;
 
 	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Car> cars = new ArrayList();
@@ -19,6 +21,7 @@ public class Garage {
 
 	public Garage(String name) {
 		this.name = name;
+		this.id = UUID.randomUUID().toString();
 	}
 
 	public String getName() {

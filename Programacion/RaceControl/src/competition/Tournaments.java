@@ -3,17 +3,15 @@ package competition;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
 public class Tournaments {
 	@JsonIgnore
 	private static Tournaments tournamentManager = null;
 
-	private ArrayList<Tournament> tournaments = new ArrayList();;
+	private ArrayList<Tournament> tournaments;
 
-	
 	private Tournaments() {
+		tournaments = new ArrayList();
 	}
 
 	public static Tournaments getInstance() {
@@ -55,7 +53,7 @@ public class Tournaments {
 	}
 
 	@JsonIgnore
-	public ArrayList<Tournament> getTournamentByState(boolean tournamentIsFinished) {
+	public ArrayList<Tournament> getTournamentsByState(boolean tournamentIsFinished) {
 		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
 		for (Tournament tournament : tournaments) {
 			if (tournament.isFinished() == tournamentIsFinished) {
@@ -66,4 +64,27 @@ public class Tournaments {
 		return foundTournaments;
 	}
 
+	@JsonIgnore
+	public ArrayList<Tournament> getTournamentsThatCanAddNewRaces() {
+
+		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
+		for (Tournament actualTournament : tournaments) {
+			if (!actualTournament.isFinished()) {
+				foundTournaments.add(actualTournament);
+			}
+		}
+		return foundTournaments;
+
+	}
+
+	@JsonIgnore
+	public ArrayList<Tournament> getTounamentsThatCanRunNextRace() {
+		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
+		for (Tournament tournament : tournaments) {
+			if (tournament.getLastRaceRunned() < tournament.getNumberOfActualRaces()) {
+				foundTournaments.add(tournament);
+			}
+		}
+		return foundTournaments;
+	}
 }

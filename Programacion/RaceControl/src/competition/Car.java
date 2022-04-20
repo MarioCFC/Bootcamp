@@ -1,13 +1,14 @@
 package competition;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
 public class Car {
-	private static int nextId = 0;
-	private int id;
+	private String id;
 	private static final int maxVelocityKmH = 120;
 	private int velocityKmH = 0;
 	private Double distanceMeters = 0.0;
@@ -22,7 +23,7 @@ public class Car {
 	public Car(String brand, String model) {
 		this.brand = brand;
 		this.model = model;
-		id = nextId++;
+		id = UUID.randomUUID().toString();
 	}
 
 	public static int getMaxVelocityKmH() {

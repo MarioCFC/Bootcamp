@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -18,6 +19,9 @@ import utils.VelocityConversor;
 
 public abstract class Race implements IRun {
 	protected String name;
+	protected String id;
+	protected boolean finished;
+
 	@JsonIgnore
 	protected final RacesResults raceResultsManager = RacesResults.getInstance();
 
@@ -36,6 +40,7 @@ public abstract class Race implements IRun {
 	protected Race(String name, ArrayList<Car> participants) {
 		this.name = name;
 		this.participants = participants;
+		this.id = UUID.randomUUID().toString();
 	}
 
 	protected String getName() {
@@ -61,6 +66,14 @@ public abstract class Race implements IRun {
 		}
 
 		return new ArrayList<Garage>(garages);
+	}
+
+	protected boolean isFinished() {
+		return finished;
+	}
+
+	protected void finish() {
+		finished = true;
 	}
 
 	protected void runRound(Car car) {
@@ -93,7 +106,8 @@ public abstract class Race implements IRun {
 		sortParticipantsByDistance();
 
 		for (int i = 0, points = 3; i < participants.size(); i++) {
-			raceResultsManager.addResult(new ResultOfCarInARace(participants.get(i), this, points));
+			Car actualCar = participants.get(i);
+			raceResultsManager.addResult(new ScoreOfCarInARace(actualCar, this, points, actualCar.getDistance()));
 			if (points > 0) {
 				points--;
 			}
@@ -101,11 +115,11 @@ public abstract class Race implements IRun {
 	}
 
 	// TODO:Validar en caso de que haya menos de 3 coches
-	protected ArrayList<ResultOfCarInARace> getPodium() {
-		return (ArrayList<ResultOfCarInARace>) raceResultsManager.getResultOfARace(this).subList(0, 3);
+	protected ArrayList<ScoreOfCarInARace> getPodium() {
+		return (ArrayList<ScoreOfCarInARace>) raceResultsManager.getResultOfARace(this).subList(0, 3);
 	}
 
-	protected ArrayList<ResultOfCarInARace> getRanking() {
+	protected ArrayList<ScoreOfCarInARace> getRanking() {
 		return raceResultsManager.getResultOfARace(this);
 	}
 

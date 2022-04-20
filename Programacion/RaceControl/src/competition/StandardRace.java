@@ -27,6 +27,7 @@ public class StandardRace extends Race {
 			}
 		
 			calculateScore();
+			finish();
 		}
 
 
