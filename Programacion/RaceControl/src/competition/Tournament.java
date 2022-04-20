@@ -13,9 +13,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
+
 //TODO:Recordar la introduccion del número de carreras
 public class Tournament {
 	private String name;
+	private boolean finished;
 
 	@JsonIdentityReference(alwaysAsId = true)
 	private ArrayList<Car> participants;
@@ -33,12 +35,26 @@ public class Tournament {
 		this.name = name;
 		this.participants = participants;
 		this.numberOfRaces = numberOfRaces;
+		this.finished = false;
 		races = new ArrayList<Race>();
 		resultsManages = RacesResults.getInstance();
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void finish() {
+		this.finished = true;
+	}
+
+	@JsonIgnore
+	public ArrayList<Car> getParticipants() {
+		return participants;
 	}
 
 	public void addRace(Race newRace) {
@@ -94,4 +110,9 @@ public class Tournament {
 		ranking.sort(comp.reversed());
 	}
 
+	@Override
+	public String toString() {
+		String state = isFinished() ? "Finished" : "In progress";
+		return "Name: " + name + "- State: " + state;
+	}
 }

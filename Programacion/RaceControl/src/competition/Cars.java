@@ -28,7 +28,6 @@ public class Cars {
 		return cars.get(index);
 	}
 
-	// No borrar o empieza a haber duplicados en el array
 	@JsonIgnore
 	public ArrayList<Car> getAll(){
 		return cars;

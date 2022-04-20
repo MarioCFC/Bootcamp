@@ -58,4 +58,9 @@ public class Garage {
 	public void removeCar(Car removedCar) {
 		cars.remove(removedCar);
 	}
+
+	@Override
+	public String toString() {
+		return "Name: " + name;
+	}
 }

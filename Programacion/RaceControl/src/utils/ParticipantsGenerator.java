@@ -11,24 +11,22 @@ import competition.Garage;
 
 public class ParticipantsGenerator {
 
-	public static ArrayList<Car> generateParticipants(List<Garage> garages) throws Exception {
-		garageValidation(garages);
+	public static ArrayList<Car> generateParticipants(List<Garage> garages) {
 		if (garages.size() == 1) {
 			return generateParticipantsOfOneGarage(garages.get(0));
-		}else {
+		} else {
 			return generateParticipantsOfMultipleGarages(garages);
 		}
 
 	}
 
-	private static void garageValidation(List<Garage> garages) throws Exception {
-		for (Garage garage : garages) {
-			if (garage.getCars().isEmpty())
-				throw new Exception("The garage " + garage.getName() + " is empty");
-		}
-	}
+	/*
+	 * private static void garageValidation(List<Garage> garages) throws Exception {
+	 * for (Garage garage : garages) { if (garage.getCars().isEmpty()) throw new
+	 * Exception("The garage " + garage.getName() + " is empty"); } }
+	 */
 
-	private static ArrayList<Car> generateParticipantsOfMultipleGarages(List<Garage> garages) throws Exception {
+	private static ArrayList<Car> generateParticipantsOfMultipleGarages(List<Garage> garages) {
 		HashSet<Car> participants = new HashSet();
 		Random rand = new Random();
 		for (Garage garage : garages) {
@@ -46,7 +44,7 @@ public class ParticipantsGenerator {
 
 	}
 
-	private static ArrayList<Car> generateParticipantsOfOneGarage(Garage garages) throws Exception {
+	private static ArrayList<Car> generateParticipantsOfOneGarage(Garage garages) {
 		HashSet<Car> participants = new HashSet();
 		for (Car car : garages.getCars()) {
 			participants.add(car);

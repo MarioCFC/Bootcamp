@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class StandardRace extends Race {
 	private int durationInMin;
 
+	private StandardRace() {
+	}
 
 	public StandardRace(String name, ArrayList<Car> participants, int durationInMin) {
 		super(name, participants);

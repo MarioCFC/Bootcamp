@@ -49,4 +49,21 @@ public class Tournaments {
 		return tournaments.size();
 	}
 
+	@JsonIgnore
+	public ArrayList<Tournament> getAll() {
+		return tournaments;
+	}
+
+	@JsonIgnore
+	public ArrayList<Tournament> getTournamentByState(boolean tournamentIsFinished) {
+		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
+		for (Tournament tournament : tournaments) {
+			if (tournament.isFinished() == tournamentIsFinished) {
+				foundTournaments.add(tournament);
+			}
+		}
+
+		return foundTournaments;
+	}
+
 }

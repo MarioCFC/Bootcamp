@@ -33,6 +33,11 @@ public class Garages {
 		return garages.get(index);
 	}
 
+	@JsonIgnore
+	public ArrayList<Garage> getAll() {
+		return garages;
+	}
+
 	public void removeGarage(int index) {
 		garages.remove(index);
 	}
@@ -46,4 +51,16 @@ public class Garages {
 	public int getNumberOfGarages() {
 		return garages.size();
 	}
+
+	@JsonIgnore
+	public ArrayList<Garage> getGarageWithCars() {
+		ArrayList<Garage> garageWithCars = new ArrayList<Garage>();
+		for (Garage garage : garageWithCars) {
+			if (!garage.getCars().isEmpty()) {
+				garageWithCars.add(garage);
+			}
+		}
+		return garageWithCars;
+	}
+
 }

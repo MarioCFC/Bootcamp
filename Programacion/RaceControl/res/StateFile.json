@@ -1,25 +1,40 @@
 {
   "tournaments" : {
     "@class" : "competition.Tournaments",
-    "tournaments" : [ ]
+    "tournaments" : [ {
+      "@class" : "competition.Tournament",
+      "name" : "Torneo Prueba",
+      "races" : [ ],
+      "numberOfRaces" : 10,
+      "lastRaceRunned" : 0
+    } ]
   },
   "garages" : {
-    "garages" : [ ]
+    "garages" : [ {
+      "name" : "Seat",
+      "cars" : [ 0 ]
+    } ]
   },
   "cars" : {
     "cars" : [ {
       "id" : 0,
       "velocityKmH" : 0,
-      "distanceMeters" : 0.0,
-      "brand" : "a",
-      "model" : "a",
-      "sticker" : null,
-      "distance" : 0.0
-    } ],
-    "all" : [ 0 ]
+      "distanceMeters" : 127777.0,
+      "brand" : "brand",
+      "model" : "model1",
+      "sticker" : "Seat",
+      "distance" : 127777.0
+    } ]
   },
   "races" : {
-    "races" : [ ]
+    "races" : [ {
+      "@class" : "competition.StandardRace",
+      "name" : "1-Carrera estandar",
+      "eventWichItBelongs" : null,
+      "participants" : [ 0 ],
+      "velocityChangePerMinuteInKmH" : 10,
+      "durationInMin" : 180
+    } ]
   },
   "racesResults" : {
     "results" : [ ]
