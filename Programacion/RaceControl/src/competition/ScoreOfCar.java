@@ -11,6 +11,9 @@ public class ScoreOfCar {
 	protected Integer score;
 	protected Double totalDistance;
 
+	protected ScoreOfCar() {
+	}
+
 	public ScoreOfCar(Car car, Integer score, Double totalDistance) {
 		this.car = car;
 		this.score = score;

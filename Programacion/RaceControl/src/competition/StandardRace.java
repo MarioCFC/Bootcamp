@@ -13,23 +13,29 @@ public class StandardRace extends Race {
 		this.durationInMin = durationInMin;
 	}
 
-
-
-
 	@Override
 	public void run() {
-		for (Car car : participants) {
+
+		for (int i = 0; i < participants.size(); i++) {
+			Car car = participants.get(i);
 			car.setDistance(0.0);
 			car.setVelocityKmH(0);
 
-			for (int i = 0; i < durationInMin; i++) {
+			for (int j = 0; j < durationInMin; j++) {
 				runRound(car);
 			}
-		
-			calculateScore();
-			finish();
-		}
 
+		}
+		calculateScore();
+		finish();
+
+		/*
+		 * for (Car car : participants) { car.setDistance(0.0); car.setVelocityKmH(0);
+		 * 
+		 * for (int i = 0; i < durationInMin; i++) { runRound(car); }
+		 * 
+		 * calculateScore(); finish(); }
+		 */
 
 	}
 

@@ -9,10 +9,6 @@ public class Cars {
 	private static Cars carManager = null;
 	private ArrayList<Car> cars;
 
-	private Cars() {
-		cars = new ArrayList();
-	}
-
 	public static Cars getInstance() {
 		if (carManager == null) {
 			carManager = new Cars();
@@ -28,8 +24,16 @@ public class Cars {
 		return cars.get(index);
 	}
 
+	public void loadCarsList(ArrayList<Car> cars) {
+		this.cars = cars;
+	}
+
+	public void initiateCarsList() {
+		cars = new ArrayList();
+	}
+
 	@JsonIgnore
-	public ArrayList<Car> getAll(){
+	public ArrayList<Car> getAll() {
 		return cars;
 	}
 

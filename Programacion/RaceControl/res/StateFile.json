@@ -1,54 +1,62 @@
 {
-  "tournaments" : {
-    "tournaments" : [ {
-      "id" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
-      "name" : "tor",
-      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
-      "races" : [ "sdfsa", "fgdss" ],
-      "numberLimitOfRaces" : 10,
-      "lastRaceRunned" : 2
-    } ]
-  },
-  "garages" : {
-    "garages" : [ {
-      "id" : "e6980da5-c6a8-4c2b-a98f-d5fd1bbd7c73",
-      "name" : "sdfsdf",
-      "cars" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ]
-    } ]
-  },
-  "cars" : {
-    "cars" : [ {
-      "id" : "c4587fb0-0f1a-429a-8853-74bf2cde8e2f",
-      "velocityKmH" : 100,
-      "distanceMeters" : 176608.0,
-      "brand" : "bgfgdsa",
-      "model" : "tujyrs",
-      "sticker" : "e6980da5-c6a8-4c2b-a98f-d5fd1bbd7c73",
-      "distance" : 176608.0
-    } ]
-  },
-  "races" : {
-    "races" : [ {
-      "@class" : "competition.StandardRace",
-      "name" : "sdfsa",
-      "id" : "4ffef24c-e262-4a5f-8f86-d1ea3f64ba5b",
-      "finished" : true,
-      "eventWichItBelongs" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
-      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
-      "velocityChangePerMinuteInKmH" : 10,
-      "durationInMin" : 1800
-    }, {
-      "@class" : "competition.StandardRace",
-      "name" : "fgdss",
-      "id" : "9f7fa3ff-e6c1-429f-b792-0eca6a64dca8",
-      "finished" : true,
-      "eventWichItBelongs" : "b49e5db6-4173-4003-8adb-1afb2e7339d4",
-      "participants" : [ "c4587fb0-0f1a-429a-8853-74bf2cde8e2f" ],
-      "velocityChangePerMinuteInKmH" : 10,
-      "durationInMin" : 180
-    } ]
-  },
-  "racesResults" : {
-    "results" : [ ]
-  }
+  "tournaments" : [ {
+    "id" : "5a8e0eb0-9f19-4108-9756-9d1505cb21b3",
+    "name" : "tor1",
+    "participants" : [ "9be7cb3c-443e-471d-9c93-78faa29b760d" ],
+    "races" : [ "8a00a44f-9a63-4445-85be-61e3376f71c2" ],
+    "numberLimitOfRaces" : 1,
+    "lastRaceRunned" : 1
+  }, {
+    "id" : "96418b18-7464-4f67-8e88-d21805ab32b3",
+    "name" : "tor2",
+    "participants" : [ "9be7cb3c-443e-471d-9c93-78faa29b760d" ],
+    "races" : [ "450ff526-4865-4be6-9df8-91eb0dce5268" ],
+    "numberLimitOfRaces" : 1,
+    "lastRaceRunned" : 1
+  } ],
+  "garages" : [ {
+    "id" : "d5ebd09b-6b79-440d-b15d-8dc97e63320a",
+    "name" : "Gar1",
+    "cars" : [ "9be7cb3c-443e-471d-9c93-78faa29b760d" ]
+  } ],
+  "cars" : [ {
+    "id" : "9be7cb3c-443e-471d-9c93-78faa29b760d",
+    "velocityKmH" : 10,
+    "distanceMeters" : 1164.0,
+    "brand" : "Brand1",
+    "model" : "Model1",
+    "sticker" : "d5ebd09b-6b79-440d-b15d-8dc97e63320a",
+    "distance" : 1164.0
+  } ],
+  "races" : [ {
+    "@class" : "competition.StandardRace",
+    "id" : "8a00a44f-9a63-4445-85be-61e3376f71c2",
+    "name" : "car1",
+    "finished" : true,
+    "eventWichItBelongs" : "5a8e0eb0-9f19-4108-9756-9d1505cb21b3",
+    "participants" : [ "9be7cb3c-443e-471d-9c93-78faa29b760d" ],
+    "velocityChangePerMinuteInKmH" : 10,
+    "durationInMin" : 180
+  }, {
+    "@class" : "competition.KnockoutRace",
+    "id" : "450ff526-4865-4be6-9df8-91eb0dce5268",
+    "name" : "",
+    "finished" : true,
+    "eventWichItBelongs" : "96418b18-7464-4f67-8e88-d21805ab32b3",
+    "participants" : [ "9be7cb3c-443e-471d-9c93-78faa29b760d" ],
+    "velocityChangePerMinuteInKmH" : 10
+  } ],
+  "racesResults" : [ {
+    "id" : "def62283-f5fb-47da-a203-f4fe9e7096fe",
+    "car" : "9be7cb3c-443e-471d-9c93-78faa29b760d",
+    "score" : 3,
+    "totalDistance" : 175610.0,
+    "race" : "8a00a44f-9a63-4445-85be-61e3376f71c2"
+  }, {
+    "id" : "d195d8c1-c561-48b8-ac28-4bd1c0840102",
+    "car" : "9be7cb3c-443e-471d-9c93-78faa29b760d",
+    "score" : 3,
+    "totalDistance" : 1164.0,
+    "race" : "450ff526-4865-4be6-9df8-91eb0dce5268"
+  } ]
 }

@@ -10,9 +10,6 @@ public class Garages {
 
 	private ArrayList<Garage> garages;
 
-	private Garages() {
-		garages = new ArrayList();
-	}
 
 	public static Garages getInstance() {
 		if (garageManager == null) {
@@ -31,6 +28,15 @@ public class Garages {
 
 	public Garage getGarage(int index) {
 		return garages.get(index);
+	}
+
+	public void loadGarageList(ArrayList<Garage> garages) {
+		this.garages = garages;
+	}
+
+
+	public void initiateGarageList() {
+		garages = new ArrayList<Garage>();
 	}
 
 	@JsonIgnore

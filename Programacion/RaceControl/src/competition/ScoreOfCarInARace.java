@@ -8,6 +8,10 @@ public class ScoreOfCarInARace extends ScoreOfCar {
 
 	private Race race;
 
+	private ScoreOfCarInARace() {
+		super();
+	}
+
 	public ScoreOfCarInARace(Car car, Race race, Integer score, Double totalDistance) {
 		super(car, score, totalDistance);
 		this.race = race;

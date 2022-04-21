@@ -44,12 +44,13 @@ public class Tournament {
 
 	@JsonIgnore
 	public boolean isFinished() {
-		return getNumberOfActualRaces() >= (getNumberLimitOfRaces());
+		return lastRaceRunned >= numberLimitOfRaces;
 	}
 
-	public int getNumberLimitOfRaces() {
-		return numberLimitOfRaces;
+	public boolean canAddNewRace() {
+		return races.size() < numberLimitOfRaces;
 	}
+
 
 	@JsonIgnore
 	public int getNumberOfActualRaces() {
@@ -60,9 +61,6 @@ public class Tournament {
 		return races;
 	}
 
-	public int getLastRaceRunned() {
-		return lastRaceRunned;
-	}
 
 
 	public ArrayList<Car> getParticipants() {
@@ -71,14 +69,18 @@ public class Tournament {
 
 	public void addRace(Race newRace) {
 		races.add(newRace);
+		// TODO:
 		newRace.setEventWichItBelongs(this);
+	}
+
+	public boolean haveAnotherRace() {
+		return lastRaceRunned <= (races.size() - 1);
 	}
 
 	// ATENTO
 	@JsonIgnore
 	public Race getNextRaceToRun() {
 		return races.get(lastRaceRunned++);
-
 	}
 
 

@@ -10,9 +10,6 @@ public class Tournaments {
 
 	private ArrayList<Tournament> tournaments;
 
-	private Tournaments() {
-		tournaments = new ArrayList();
-	}
 
 	public static Tournaments getInstance() {
 		if (tournamentManager == null) {
@@ -21,12 +18,17 @@ public class Tournaments {
 		return tournamentManager;
 	}
 
-	public void setTournaments(ArrayList<Tournament> tournaments) {
+	public void addTournament(Tournament newTournament) {
+		tournaments.add(newTournament);
+	}
+
+	public void loadTournamentsList(ArrayList<Tournament> tournaments) {
 		this.tournaments = tournaments;
 	}
 
-	public void addTournament(Tournament newTournament) {
-		tournaments.add(newTournament);
+
+	public void initiateTournamentsList() {
+		tournaments = new ArrayList();
 	}
 
 	public Tournament getTournament(int index) {
@@ -69,7 +71,7 @@ public class Tournaments {
 
 		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
 		for (Tournament actualTournament : tournaments) {
-			if (!actualTournament.isFinished()) {
+			if (actualTournament.canAddNewRace()) {
 				foundTournaments.add(actualTournament);
 			}
 		}
@@ -81,7 +83,7 @@ public class Tournaments {
 	public ArrayList<Tournament> getTounamentsThatCanRunNextRace() {
 		ArrayList<Tournament> foundTournaments = new ArrayList<Tournament>();
 		for (Tournament tournament : tournaments) {
-			if (tournament.getLastRaceRunned() < tournament.getNumberOfActualRaces()) {
+			if (tournament.haveAnotherRace()) {
 				foundTournaments.add(tournament);
 			}
 		}

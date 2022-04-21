@@ -10,9 +10,6 @@ public class Races {
 
 	private ArrayList<Race> races;
 
-	private Races() {
-		races = new ArrayList();
-	}
 
 	public static Races getInstance() {
 		if (raceManager == null) {
@@ -21,8 +18,17 @@ public class Races {
 		return raceManager;
 	}
 
-	public void setRaces(ArrayList<Race> races) {
+	public void loadRacesList(ArrayList<Race> races) {
 		this.races = races;
+	}
+
+
+	public void initiateRacesList() {
+		races = new ArrayList();
+	}
+
+	public ArrayList<Race> getAll() {
+		return races;
 	}
 
 	public void addRace(Race newRace) {

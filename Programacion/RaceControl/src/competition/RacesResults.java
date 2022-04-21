@@ -10,10 +10,6 @@ public class RacesResults {
 	private static RacesResults raceResultManager = null;
 	private ArrayList<ScoreOfCarInARace> results;
 
-	private RacesResults() {
-		results = new ArrayList();
-	}
-
 	public static RacesResults getInstance() {
 		if (raceResultManager == null) {
 			raceResultManager = new RacesResults();
@@ -25,14 +21,16 @@ public class RacesResults {
 		results.add(newResult);
 	}
 
-	@JsonIgnore
-	public static RacesResults getRaceResultManager() {
-		return raceResultManager;
+	public void loadRacesResultsList(ArrayList<ScoreOfCarInARace> results) {
+		this.results = results;
 	}
 
-	// TODO:Quitar pudiendo crear los Score necesarios
-	public static void setRaceResultManager(RacesResults raceResultManager) {
-		RacesResults.raceResultManager = raceResultManager;
+	public void initiateRacesResultsList() {
+		results = new ArrayList();
+	}
+
+	public ArrayList<ScoreOfCarInARace> getAll() {
+		return results;
 	}
 
 	public ArrayList<ScoreOfCarInARace> getResultOfARace(Race race) {
@@ -82,6 +80,7 @@ public class RacesResults {
 				} else {
 					actualScore = new ScoreOfCar(scoreOfCarInARace.getCar(), scoreOfCarInARace.getScore(),
 							scoreOfCarInARace.getTotalDistance());
+					tournamentRanking.add(actualScore);
 				}
 			}
 		}
