@@ -74,7 +74,7 @@ public class Car {
 
 	@Override
 	public String toString() {
-		return "Brand: " + brand + " - Model: " + model;
+		return "Marca: " + brand + " - Modelo: " + model;
 	}
 
 }

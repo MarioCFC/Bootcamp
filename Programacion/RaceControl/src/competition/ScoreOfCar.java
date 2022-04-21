@@ -21,29 +21,29 @@ public class ScoreOfCar {
 		id = UUID.randomUUID().toString();
 	}
 
-	protected Car getCar() {
+	public Car getCar() {
 		return car;
 	}
 
-	protected Integer getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	protected void setScore(Integer score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 
-	protected Double getTotalDistance() {
+	public Double getTotalDistance() {
 		return totalDistance;
 	}
 
-	protected void setTotalDistance(Double totalDistance) {
+	public void setTotalDistance(Double totalDistance) {
 		this.totalDistance = totalDistance;
 	}
 
 	@Override
 	public String toString() {
-		return car.toString() + " - Score: " + score;
+		return car.toString() + " - Puntuación: " + score;
 	}
 
 }

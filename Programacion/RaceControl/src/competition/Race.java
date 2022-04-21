@@ -114,7 +114,6 @@ public abstract class Race implements IRun {
 		}
 	}
 
-	// TODO:Validar en caso de que haya menos de 3 coches
 	protected ArrayList<ScoreOfCarInARace> getPodium() {
 		return (ArrayList<ScoreOfCarInARace>) raceResultsManager.getResultOfARace(this).subList(0, 3);
 	}

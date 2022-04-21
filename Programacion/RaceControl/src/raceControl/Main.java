@@ -1,6 +1,5 @@
 package raceControl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,7 +36,7 @@ public class Main {
 	private static RacesResults racesResults = RacesResults.getInstance();
 
 	/*
-	 * TODO:Meter opcion para cancelar TODO:Opcion de listar los distintos
+	 * TODO:Añadir lo de repartir el premio TODO:Opcion de listar los distintos
 	 * objetos(Coches,garajes,torneos,carreras) TODO:Si da tiempo separar los
 	 * objetos en distintos JSON Resumiendo, hacer que cargue bien y refactorizar a
 	 * lo bestia el menú
@@ -46,77 +45,218 @@ public class Main {
 
 		loadSnapshot();
 
-		boolean interruptor = true;
-		while (interruptor) {
+		/*
+		 * for (int i = 0; i < 3; i++) { cars.addCar(new Car("model" + i, "brand" + i));
+		 * }
+		 * 
+		 * for (int i = 0; i < 2; i++) { garages.addGarage(new Garage("gar" + i)); }
+		 * 
+		 * garages.getGarage(0).addCar(cars.getCar(0));
+		 * garages.getGarage(0).addCar(cars.getCar(1));
+		 * garages.getGarage(1).addCar(cars.getCar(2));
+		 */
+		loopSession: while (true) {
 			System.out.println("1-Torneos \n2-Garajes \n3-Coches \n4-Finalizar");
 
 			switch (numberInput.nextInt()) {
 			case 1:
-				System.out.println("1-Crear torneo \n2-Gestionar torneos existentes");
-				switch (numberInput.nextInt()) {
-				case 1:
-					// Crear torneo
-					createNewTournament();
-					break;
 
-				case 2:
-					// Gestionar torneos
-					modifyExistingTournament();
-					break;
+				loopGeneralMenuCar: while (true) {
+					System.out.println(
+							"\n1-Crear torneo \n2-Borrar torneo finalizado \n3-Listar torneos \n4-Gestionar torneos \n5-Atrás");
+					switch (numberInput.nextInt()) {
+					case 1:
+						// Crear torneo
+						createNewTournament();
+						break;
+
+					case 2:
+						// Borrar torneo
+						removeTournament();
+						break;
+					case 3:
+
+						if (!tournaments.getAll().isEmpty()) {
+							System.out.println("\nLos torneos almacenados son:");
+							showElementsOfList(tournaments.getAll());
+						} else {
+							System.out.println("No hay ningun torneo almacenado");
+						}
+						break;
+
+					case 4:
+						// Gestionar torneos
+						modifyExistingTournament();
+						break;
+
+					case 5:
+						saveSnapShot();
+						System.out.println();
+						break loopGeneralMenuCar;
+					}
 				}
 				break;
 
 			case 2:
-				// Menu garages
-				System.out.println("1-Crear garaje \n2-Gestionar garajes existentes");
 
-				switch (numberInput.nextInt()) {
+				loopGeneralMenuGarage: while (true) {
 
-				case 1:
-					// Crear garaje
-					createNewGarage();
-					break;
+					// Menu garages
+					System.out.println(
+							"\n1-Crear garaje \n2-Borrar garaje \n3-Listar garajes \n4-Gestionar garajes existentes \n5-Atrás");
 
-				case 2:
-					// Modificar un garaje existente
-					showModifyGarageOptionMenu();
-					break;
+					switch (numberInput.nextInt()) {
+
+					case 1:
+						// Crear garaje
+						createNewGarage();
+						break;
+
+					case 2:
+						removeGarage();
+						break;
+
+					case 3:
+						if (!garages.getAll().isEmpty()) {
+							System.out.println("\nLos garajes alamacenados son:");
+							showElementsOfList(garages.getAll());
+						} else {
+							System.out.println("No hay ningun garaje almacenado");
+						}
+
+						break;
+					case 4:
+						// Modificar un garaje existente
+						showModifyGarageOptionMenu();
+						break;
+
+					case 5:
+						System.out.println();
+						break loopGeneralMenuGarage;
+					}
 				}
-
 				break;
 			case 3:
-				// Menu coches
-				System.out.println("1-Crear coche \n2-Gestionar coches existentes");
+				loopGeneralMenuCar: while (true) {
+					// Menu coches
+					System.out.println(
+							"\n1-Crear coche \n2-Borrar coche sin garaje \n3-Listar coches \n4-Modificar los datos de un coche \n5-Atrás");
 
-				switch (numberInput.nextInt()) {
-				// Crear coche
-				case 1:
-					createNewCar();
-					break;
+					switch (numberInput.nextInt()) {
+					// Crear coche
+					case 1:
+						createNewCar();
+						break;
 
-				case 2:
-					// Modificar un coche existente
-					modifyingCar();
-					break;
+					case 2:
+						removeCarWithOutGarage();
+						break;
+					case 3:
+						if (!cars.getAll().isEmpty()) {
+							System.out.println("\nLos coches sin garaje son:");
+							showElementsOfList(cars.getAll());
+						} else {
+							System.out.println("No hay ningun coche almacenado");
+						}
+
+						break;
+					case 4:
+						modifyingDataOfCar();
+						break;
+
+					case 5:
+						System.out.println();
+						break loopGeneralMenuCar;
+					}
 				}
-
 				break;
 			case 4:
 				saveSnapShot();
-				interruptor = false;
-				System.out.println("Sesion finalizada");
-				break;
+				System.out.println("Sesión finalizada");
+				break loopSession;
 
 			}
 		}
 
 	}
 
+	public static void removeTournament() {
+		try {
+
+			ArrayList<Tournament> unfinishedTournaments = tournaments.getTournamentsByState(true);
+			Tournament selectedTournament;
+
+			if (!unfinishedTournaments.isEmpty()) {
+				System.out.println("Selecciona el torneo a eliminar:");
+				selectedTournament = selectObjectOfListMenu(unfinishedTournaments);
+
+				if (showConfirmAction()) {
+					tournaments.removeTournament(selectedTournament);
+					saveSnapShot();
+					System.out.println("Torneo eliminado");
+				}
+			} else {
+				System.out.println("No hay ningún torneo finalizado alamacenado");
+			}
+		} catch (Exception e) {
+			System.out.println("\nError al borrar el torneo");
+		}
+	}
+
+	public static void removeGarage() {
+		try {
+			ArrayList<Garage> garagesWithOutCars = garages.getGarageWithOutCars();
+			Garage selectedGarage;
+
+			if (!garagesWithOutCars.isEmpty()) {
+				System.out.println("\nLos garajes sin coches son:");
+				showElementsOfList(garagesWithOutCars);
+				System.out.println("\nSelecciona el garaje a eliminar:");
+				selectedGarage = selectObjectOfListMenu(garagesWithOutCars);
+
+				if (showConfirmAction()) {
+					garages.removeGarage(selectedGarage);
+					saveSnapShot();
+					System.out.println("Garaje eliminado");
+				}
+			} else {
+				System.out.println("No hay ningún garaje alamacenado");
+			}
+		} catch (Exception e) {
+			System.out.println("\nError al borrar el garaje");
+		}
+	}
+
+	public static void removeCarWithOutGarage() {
+		try {
+
+			ArrayList<Car> carsWithOutGarage = cars.getCarsWithoutGarage();
+			Car selectedCar;
+
+			if (!carsWithOutGarage.isEmpty()) {
+				System.out.println("\nLos coches sin garaje son:");
+				showElementsOfList(carsWithOutGarage);
+				System.out.println("Selecciona el coche a eliminar:");
+				selectedCar = selectObjectOfListMenu(carsWithOutGarage);
+
+				if (showConfirmAction()) {
+					cars.removeCar(selectedCar);
+					saveSnapShot();
+					System.out.println("Coche eliminado");
+				}
+			} else {
+				System.out.println("No hay ningún coche sin garaje alamacenado");
+			}
+		} catch (Exception e) {
+			System.out.println("\nError al borrar el coche");
+		}
+	}
+
 	public static void loadSnapshot() throws StreamReadException {
 		try {
 			actualSnapShot = jsonManager.load();
 		} catch (Exception e) {
-			System.out.println(e.getMessage() + "\nError al cargar los datos almacenados");
+			System.out.println("Archivo no encontrado, creando uno nuevo");
 		}
 
 		if (actualSnapShot != null && actualSnapShot.areListsInitiated()) {
@@ -137,61 +277,69 @@ public class Main {
 
 	}
 
-	public static void saveSnapShot() throws IOException {
+	public static void saveSnapShot() {
 		try {
 			jsonManager.save(actualSnapShot);
 		} catch (Exception e) {
-			System.out.println("Error al guardar los datos");
+			System.out.println("\nError al guardar los datos");
 		}
 
 	}
 
+	// Añadir confirmacion
 	public static void createNewGarage() {
 		try {
-			System.out.println("Introduce el nombre:");
+			System.out.println("\nIntroduce el nombre:");
 			String name = stringInput.nextLine();
 
-			garages.addGarage(new Garage(name));
-			System.out.println("El garaje ha sido creado");
-			saveSnapShot();
+			if (showConfirmAction()) {
+				garages.addGarage(new Garage(name));
+				System.out.println("El garaje ha sido creado");
+				saveSnapShot();
+			}
+
 		} catch (Exception ex) {
-			System.out.println("Error creating the garage");
+			System.out.println("\nError al crear el garaje");
 		}
 
 	}
 
-	public static void showGaragesOfAList(ArrayList<Garage> garages) {
-		for (int i = 0; i < garages.size(); i++) {
-			System.out.println(i + "-" + garages.get(i).toString());
-		}
-
-	}
-
+	// TODO:Plantear subir la opciones de añadir y eliminar a este menú
 	public static void showModifyGarageOptionMenu() {
+		Garage modifiedGarage = null;
+		ArrayList<Garage> allGarages = garages.getAll();
 
-		if (garages.getNumberOfGarages() > 0) {
-			int indexOfSelectedGarage;
+		if (!allGarages.isEmpty()) {
 
-			showGaragesOfAList(garages.getAll());
+			loopManageGarage: while (true) {
 
-			System.out.println("Selecciona un garaje");
-			indexOfSelectedGarage = numberInput.nextInt();
+				if (modifiedGarage == null) {
+					System.out.println("\nSelecciona un garaje:");
+					showElementsOfList(garages.getAll());
 
-			Garage modifiedGarage = garages.getGarage(indexOfSelectedGarage);
-			System.out.println("El garaje escogido es:\n" + modifiedGarage + "\n");
+					modifiedGarage = selectObjectOfListMenu(garages.getAll());
 
-			System.out.println("1-Modificar el nombre \n2-Añadir/Eliminar coches");
-			switch (numberInput.nextInt()) {
-			case 1:
-				modifyingGarageName(modifiedGarage);
-				break;
+					System.out.println("\nEl garaje escogido es:\n" + modifiedGarage + "\n");
 
-			case 2:
-				modifyingGarageCars(modifiedGarage);
-				break;
+				}
+
+				System.out.println("\n1-Modificar el nombre \n2-Añadir/Eliminar coche \n3-Atrás");
+
+				switch (numberInput.nextInt()) {
+				case 1:
+					modifyingGarageName(modifiedGarage);
+					break;
+
+				case 2:
+					modifyingGarageCars(modifiedGarage);
+					break;
+
+				case 3:
+					break loopManageGarage;
+				}
 			}
 		} else {
-			System.out.println("No existe ningún garaje para modificar");
+			System.out.println("No hay ningún garaje almacenado");
 		}
 
 	}
@@ -201,108 +349,97 @@ public class Main {
 
 			String newName;
 
-			System.out.println("Introduce el nuevo nombre:");
+			System.out.println("\nIntroduce un nuevo nombre:");
 			newName = stringInput.nextLine();
 
-			System.out.println(
-					"Los datos del programa serán:\n Name: " + newName + "\nConfirmar los cambios (1-Si/2-No): ");
+			// Confirmacion
+			System.out.println("\nLos datos del garaje serán:\n Name: " + newName);
 
-			if (numberInput.nextInt() == 1) {
+			if (showConfirmAction()) {
 				modifiedGarage.setName(newName);
 				System.out.println("Operación completada");
-
 				saveSnapShot();
-
-			} else {
-				System.out.println("Cambios descartados");
 			}
 
 		} catch (Exception ex) {
-			System.out.println("Error cambiando el nombre del garaje");
+			System.out.println("\nError cambiando el nombre del garaje");
 		}
 	}
 
-	// TODO:Cambiar el nombre del método
 	public static void modifyingGarageCars(Garage modifiedGarage) {
-		int indexOfSelectedGarage;
-		boolean thereAreNoCars;
-		String newName;
 
-		thereAreNoCars = modifiedGarage.getCars().isEmpty();
+		loopManageCarsOfGarage: while (true) {
+			System.out.println("\n1-Asignar coche \n2-Eliminar coche \n3-Atrás");
 
-		if (thereAreNoCars) {
-			System.out.println("El garaje seleccionado no tiene asignado ningún coche");
-		} else {
-			showCarsOfAGarage(modifiedGarage);
+			switch (numberInput.nextInt()) {
+			case 1:
+				addCarToGarage(modifiedGarage);
+				break;
+
+			case 2:
+				removeACarOfTheCarage(modifiedGarage);
+				break;
+
+			case 3:
+				break loopManageCarsOfGarage;
+			}
+
 		}
 
-		System.out.println("1-Asignar coche");
-		if (!thereAreNoCars) {
-			System.out.println("2-Eliminar coche del garaje");
-		}
-
-		int optionInput = numberInput.nextInt();
-		if (optionInput == 1) {
-			addCarToGarage(modifiedGarage);
-		} else if (optionInput == 2 && !thereAreNoCars) {
-			// Modificar un coche existente
-			removeACarOfTheCarage(modifiedGarage);
-		}
-
-	}
-
-	public static void showCarsOfAGarage(Garage garage) {
-		showCarsOfAList(garage.getCars());
 	}
 
 	public static void addCarToGarage(Garage garage) {
 
 		try {
 
-			int indexOfSelectedCar;
+			Car selectedCar;
 			ArrayList<Car> carsWithoutGarage = cars.getCarsWithoutGarage();
-			showCarsOfAList(carsWithoutGarage);
 
-			System.out.println("S:");
-			indexOfSelectedCar = numberInput.nextInt();
+			if (!cars.getCarsWithoutGarage().isEmpty()) {
 
-			Car selectedCar = carsWithoutGarage.get(indexOfSelectedCar);
-			System.out.println(
-					"El coche seleccionado es:\n" + selectedCar.toString() + "\nConfirmar los cambios (1-Si/2-No): ");
+				System.out.println("\nSelecciona un coche para añadirlo al garaje");
 
-			if (numberInput.nextInt() == 1) {
-				garage.addCar(selectedCar);
-				System.out.println("Operacion completada");
+				showElementsOfList(carsWithoutGarage);
+				selectedCar = selectObjectOfListMenu(carsWithoutGarage);
 
-				saveSnapShot();
+				System.out.println("\nEl coche seleccionado es:\n" + selectedCar.toString());
+
+				// Confirmacion
+				if (showConfirmAction()) {
+					garage.addCar(selectedCar);
+					System.out.println("Operacion completada");
+
+					saveSnapShot();
+				}
+			} else {
+				System.out.println("No hay almacenado ningún garaje");
 			}
 		} catch (Exception ex) {
-			System.out.println("Error al añadir un coche al garaje");
+			System.out.println("\nError al añadir un coche al garaje");
 		}
 	}
 
 	public static void removeACarOfTheCarage(Garage garage) {
 		try {
+			ArrayList<Car> carsOfGarage = garage.getCars();
+			if (!carsOfGarage.isEmpty()) {
+				System.out.println("Selecciona el coche que será eliminado: ");
 
-			int indexOfSelectedCar;
-			ArrayList<Car> carsOfTheGarage = garage.getCars();
-			showCarsOfAList(carsOfTheGarage);
+				showElementsOfList(carsOfGarage);
+				Car selectedCar = selectObjectOfListMenu(carsOfGarage);
 
-			System.out.println("Selecciona el coche que será eliminado: ");
-			indexOfSelectedCar = numberInput.nextInt();
+				// Confirmacion
+				System.out.println("El coche selecionado es:\n" + selectedCar.toString());
 
-			Car selectedCar = carsOfTheGarage.get(indexOfSelectedCar);
-			System.out.println(
-					"El coche selecionado es:\n" + selectedCar.toString() + "\nConfirmar los cambios (1-Si/2-No): : ");
+				if (showConfirmAction()) {
+					garage.removeCar(selectedCar);
+					System.out.println("Operación completada");
 
-			if (numberInput.nextInt() == 1) {
-				garage.removeCar(selectedCar);
-				System.out.println("Operación completada");
-
-				saveSnapShot();
+					saveSnapShot();
+				}
 			}
 		} catch (Exception ex) {
-			System.out.println("Error al elminar un coche del garaje");
+			System.out.println("\nError al elminar un coche del garaje");
 		}
 	}
 
@@ -310,63 +447,63 @@ public class Main {
 
 		try {
 
-			String brand, model;
+			String brand;
+			String model;
 
-			System.out.println("Introduce la marca:");
+			System.out.println("\nIntroduce la marca:");
 			brand = stringInput.nextLine();
-			System.out.println("Introduce elmodelo:");
+			System.out.println("Introduce el modelo:");
 			model = stringInput.nextLine();
 
-			cars.addCar(new Car(brand, model));
-			System.out.println("El coche ha sido creado");
-			saveSnapShot();
+			if (showConfirmAction()) {
+				cars.addCar(new Car(brand, model));
+				saveSnapShot();
+				System.out.println("El coche ha sido creado");
+
+			}
+
 		} catch (Exception e) {
-			System.out.println("Error al crear un coche nuevo");
+			System.out.println("\nError al crear el coche\n");
 		}
 	}
 
-	public static void showCarsOfAList(ArrayList<Car> cars) {
-		for (int i = 0; i < cars.size(); i++) {
-			System.out.println(i + "-" + cars.get(i).toString());
-		}
-	}
-
-	public static void modifyingCar() {
+	public static void modifyingDataOfCar() {
 
 		try {
 			int indexOfSelectedCar;
 			String newBrand, newModel;
 			Car modifiedCar;
+			ArrayList<Car> allCars = cars.getAll();
 
-			if (cars.getNumberOfCars() > 0) {
+			if (!allCars.isEmpty()) {
 
-				showCarsOfAList(cars.getAll());
+				System.out.println("\nSelecciona un coche:");
+				showElementsOfList(allCars);
+				modifiedCar = selectObjectOfListMenu(allCars);
 
-				System.out.println("Selecciona un coche:");
-				indexOfSelectedCar = numberInput.nextInt();
+				System.out.println("\nEl coche escogido es:\n" + modifiedCar.toString() + "\n");
 
-				modifiedCar = cars.getCar(indexOfSelectedCar);
-				System.out.println("El coche escogido es:\n" + modifiedCar.toString() + "\n");
-
+				// TODO:A lo mejor quitar en un nuevo metodo(Menu Introducir datos coche)
 				System.out.println("Introduce la nueva marca:");
 				newBrand = stringInput.nextLine();
 				System.out.println("Introduce el nuevo modelo:");
 				newModel = stringInput.nextLine();
 
-				System.out.println("Los datos del coche serán:\n Marca: " + newBrand + " - Modelo: " + newModel
-						+ "\nConfirmar los cambios (1-Si/2-No): ");
+				System.out.println("\nLos datos del coche serán:\n Marca: " + newBrand + " - Modelo: " + newModel);
 
-				if (numberInput.nextInt() == 1) {
+				if (showConfirmAction()) {
 					modifiedCar.setBrand(newBrand);
 					modifiedCar.setModel(newModel);
+
 					System.out.println("Operacion completada");
 					saveSnapShot();
 				}
+
 			} else {
-				System.out.println("No existen coches para modificar");
+				System.out.println("No existe ningún coche");
 			}
 		} catch (Exception ex) {
-			System.out.println("Error modificando un coche");
+			System.out.println("\nError al modificar el coche");
 		}
 	}
 
@@ -378,24 +515,28 @@ public class Main {
 
 			if (!garages.getGarageWithCars().isEmpty()) {
 
-				System.out.println("Introduce el nombre:");
+				System.out.println("\nIntroduce el nombre:");
 				name = stringInput.nextLine();
+
 				System.out.println("Introduce el numero de carreras:");
-				raceNumber = stringInput.nextInt();
+				raceNumber = numberInput.nextInt();
 
 				Tournament newTournament = new Tournament(name,
 						ParticipantsGenerator.generateParticipants(chooseParticipatingGarages()), raceNumber);
 
-				tournaments.addTournament(newTournament);
-				saveSnapShot();
+				// Todo:Mostrar datos torneo
+				if (showConfirmAction()) {
+					tournaments.addTournament(newTournament);
+					saveSnapShot();
+				}
 
 			} else {
 				System.out.println("No hay garajes, o estos no contienen coches para poder participar");
 			}
 		} catch (Exception ex) {
-			System.out.println("Error creando el torneo");
+			System.out.println("\nError creando el torneo");
 		}
-	};
+	}
 
 	public static ArrayList<Garage> chooseParticipatingGarages() {
 		ArrayList<Garage> possibleGarage = garages.getGarageWithCars();
@@ -405,9 +546,11 @@ public class Main {
 		boolean interruptor = true;
 		int inputIndex;
 
-		showGaragesOfAList(possibleGarage);
+		System.out.println("\nLos garajes con coches son:");
+		showElementsOfList(possibleGarage);
 
-		System.out.println("Selecciona un garaje, -1 termina");
+		System.out.println("\nSelecciona un garaje, -1 termina");
+
 		while (true) {
 			inputIndex = numberInput.nextInt();
 
@@ -415,19 +558,15 @@ public class Main {
 				selectedGarage = possibleGarage.get(inputIndex);
 
 				if (garagesParticipants.contains(selectedGarage)) {
-					System.out.println("El garaje seleccionado ya está en el torneo");
-				}
-				System.out.println("El garaje seleccionado es:\n" + selectedGarage);
-				System.out.println("¿Quieres añadir el garaje al torneo? \nConfirmar los cambios (1-Si/2-No): ");
+					System.out.println("\nEl garaje seleccionado ya está en el torneo");
+				} else {
+					System.out.println("\nEl garaje seleccionado es:\n" + selectedGarage.toString());
 
-				if (numberInput.nextInt() == 1) {
 					garagesParticipants.add(selectedGarage);
-					System.out.println("Garaje añadido \n Selecciona otro garaje o introduce -1 para terminar");
-
+					System.out.println("\nGaraje añadido. Selecciona otro garaje o introduce -1 para terminar");
 				}
-
 			} else if (inputIndex == -1 && garagesParticipants.isEmpty()) {
-				System.out.println("Selecciona, al menos, un garaje");
+				System.out.println("\nSelecciona, al menos, un garaje");
 			} else {
 				return garagesParticipants;
 			}
@@ -437,28 +576,30 @@ public class Main {
 
 	public static void modifyExistingTournament() {
 		if (!tournaments.getAll().isEmpty()) {
-			System.out.println(
-					"1-Añadir una nueva carrera a un torneo \n2-Correr una carrera de un torneo \n3-Ver ranking de un torneo finalizado");
 
-			switch (numberInput.nextInt()) {
-			case 1:
-				createARaceInTournament();
-				break;
+			loopManageTournamentMenu: while (true) {
 
-			case 2:
-				runRaceOfUnfinishedTournament();
-				break;
-			case 3:
-				showTournamentRanKing();
-				break;
+				System.out.println(
+						"\n1-Añadir una nueva carrera a un torneo \n2-Correr una carrera de un torneo \n3-Ver ranking de un torneo finalizado \n4-Atrás");
 
+				switch (numberInput.nextInt()) {
+
+				case 1:
+					createARaceInTournament();
+					break;
+
+				case 2:
+					runRaceOfUnfinishedTournament();
+					break;
+				case 3:
+					showTournamentRanking();
+					break;
+				case 4:
+					break loopManageTournamentMenu;
+				}
 			}
-		}
-	}
-
-	public static void showTournamentsOfAList(ArrayList<Tournament> tournaments) {
-		for (int i = 0; i < tournaments.size(); i++) {
-			System.out.println(i + "-" + tournaments.get(i).toString());
+		} else {
+			System.out.println("No existe ningún torneo");
 		}
 	}
 
@@ -466,23 +607,31 @@ public class Main {
 
 		try {
 
-			int indexOfSelectedTournament;
 			Tournament selectedTournament;
 
 			ArrayList<Tournament> unFinishedTournaments = tournaments.getTournamentsThatCanAddNewRaces();
 
-			if ((selectedTournament = chooseTournamentOfAList(unFinishedTournaments)) != null) {
+			if (!unFinishedTournaments.isEmpty()) {
+				System.out.println("\nSelecciona un torneo para crear la carrera: ");
+				showElementsOfList(unFinishedTournaments);
 
-				selectedTournament.addRace(createNewRace(selectedTournament.getParticipants()));
-				System.out.println("Carrera añadida al torneo");
-				saveSnapShot();
+				selectedTournament = selectObjectOfListMenu(unFinishedTournaments);
+
+				Race createdRace = createNewRace(selectedTournament.getParticipants());
+
+				if (showConfirmAction()) {
+					selectedTournament.addRace(createdRace);
+					System.out.println("La carrera ha sido añadida al torneo");
+
+					saveSnapShot();
+				}
+
 			} else {
 				System.out.println("No hay ningún torneo al que se le pueda añadir una carrera");
 			}
 
 		} catch (Exception ex) {
-			// TODO:Quitar
-			System.out.println("Error creando la carrera");
+			System.out.println("\nError al crear/añadir la carrera");
 		}
 	}
 
@@ -491,15 +640,15 @@ public class Main {
 		int hours;
 		Race newRace = null;
 
-		System.out.println("Introduce el nombre: ");
+		System.out.println("\nIntroduce el nombre: ");
 		name = stringInput.nextLine();
 
-		System.out.println("Selecciona el tipo de la carrera \n1-Carrera estandar \n2-Carrera eliminatoria");
+		System.out.println("\nSelecciona el tipo de la carrera: \n1-Carrera estandar \n2-Carrera eliminatoria");
 		switch (numberInput.nextInt()) {
 
 		// Crear carrera
 		case 1:
-			System.out.println("Introduce la duracion en horas");
+			System.out.println("\nIntroduce la duracion en horas:");
 			hours = numberInput.nextInt();
 
 			newRace = new StandardRace(name, raceParticipants, hours * 60);
@@ -519,65 +668,93 @@ public class Main {
 			Tournament selectedTournament;
 			ArrayList<Tournament> unfinishedTournaments = tournaments.getTounamentsThatCanRunNextRace();
 
-			if ((selectedTournament = chooseTournamentOfAList(unfinishedTournaments)) != null) {
-				Race runnedRace = selectedTournament.getNextRaceToRun();
-				runnedRace.run();
-				saveSnapShot();
-				ArrayList<ScoreOfCarInARace> raceRanking = racesResults.getResultOfARace(runnedRace);
+			if (!unfinishedTournaments.isEmpty()) {
+				System.out.println("\nEscoge un torneo para celebrar la carrera:");
+				showElementsOfList(unfinishedTournaments);
+				selectedTournament = selectObjectOfListMenu(unfinishedTournaments);
 
-				System.out.println("El ranking es: ");
-				for (int i = 0; i < raceRanking.size(); i++) {
-					System.out.println((i + 1) + raceRanking.get(i).toString());
+				Race runnedRace = selectedTournament.getNextRaceToRun();
+
+				if (showConfirmAction()) {
+					runnedRace.run();
+
+					saveSnapShot();
+					ArrayList<ScoreOfCarInARace> raceRanking = racesResults.getResultOfARace(runnedRace);
+
+					System.out.println("\nEl ranking es: ");
+					for (int i = 0; i < raceRanking.size(); i++) {
+						System.out.println((i + 1) + "-" + raceRanking.get(i).toString());
+					}
 				}
 
 			} else {
-				System.out.println("No hay ninguna carrera que pueda correr una carrera");
+				System.out.println("\nNo hay ninguna carrera que pueda correr una carrera");
 			}
 
 		} catch (Exception ex) {
-			System.out.println("Error corriendo una carrera");
+			System.out.println("\nError celebrando una carrera");
 		}
 	}
 
-	public static void showTournamentRanKing() {
+	public static void showTournamentRanking() {
 		try {
 
 			int indexOfSelectedTournament;
 			Tournament selectedTournament;
 
-			ArrayList<Tournament> unFinishedTournaments = tournaments.getTournamentsByState(true);
+			ArrayList<Tournament> finishedTournaments = tournaments.getTournamentsByState(true);
 
-			if ((selectedTournament = chooseTournamentOfAList(unFinishedTournaments)) != null) {
+			if (!finishedTournaments.isEmpty()) {
+
+				System.out.println("\nSelecciona un torneo finalizado:");
+				showElementsOfList(finishedTournaments);
+				selectedTournament = selectObjectOfListMenu(finishedTournaments);
+
 				ArrayList<ScoreOfCar> tournamentRanking = racesResults.getResultsOfTournament(selectedTournament);
 
-				System.out.println("El ranking del torneo es:");
+				System.out.println("\nEl ranking del torneo es:");
+
 				for (int i = 0; i < tournamentRanking.size(); i++) {
 					System.out.println((i + 1) + "-" + tournamentRanking.get(i).toString());
 				}
 
+				if (tournamentRanking.size() > 1
+						&& tournamentRanking.get(0).getScore() == tournamentRanking.get(1).getScore()) {
+					System.out.println("\nLos ganadores del torneo, estando empatados son: \n1-"
+							+ tournamentRanking.get(0).getCar().toString() + "\n"
+							+ tournamentRanking.get(1).getCar().toString());
+				} else {
+					System.out.println("\nEl ganador del torneo es:\n" + tournamentRanking.get(0).getCar().toString());
+				}
+
 			} else {
-				System.out.println("No hay torneos finalizados de llos que se puedan ver el ranking");
+				System.out.println("\nNo hay torneos finalizados de llos que se puedan ver el ranking");
 			}
 
 		} catch (Exception e) {
-			System.out.println("Error mostrando el ranking");
+			System.out.println("\nError mostrando el ranking");
 		}
 	}
 
-	public static Tournament chooseTournamentOfAList(ArrayList<Tournament> tournaments) {
-		int indexOfSelectedTournament;
-		Tournament selectedTournament;
+	public static <T> T selectObjectOfListMenu(ArrayList<T> objList) {
+		return objList.get(numberInput.nextInt());
 
-		if (!tournaments.isEmpty()) {
-			showTournamentsOfAList(tournaments);
+	}
 
-			System.out.println("Selecciona el torneo del que quieras correr la siguiente carrera:");
-			indexOfSelectedTournament = numberInput.nextInt();
-
-			return selectedTournament = tournaments.get(indexOfSelectedTournament);
-
+	public static <T> void showElementsOfList(ArrayList<T> objList) {
+		for (int i = 0; i < objList.size(); i++) {
+			System.out.println(i + "-" + objList.get(i).toString());
 		}
+	}
 
-		return null;
+	public static boolean showConfirmAction() {
+		System.out.println("\nConfirma la acción (1-Si/2-No): ");
+
+		if (numberInput.nextInt() == 2) {
+			System.out.println("Operación cancelada");
+			return false;
+		}
+		return true;
+
 	}
 }

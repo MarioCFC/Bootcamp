@@ -69,7 +69,6 @@ public class Tournament {
 
 	public void addRace(Race newRace) {
 		races.add(newRace);
-		// TODO:
 		newRace.setEventWichItBelongs(this);
 	}
 
@@ -104,6 +103,6 @@ public class Tournament {
 	@Override
 	public String toString() {
 		String state = isFinished() ? "Finished" : "In progress";
-		return "Name: " + name + "- State: " + state;
+		return "Nombre: " + name + "- Estado: " + state;
 	}
 }

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Garages {
+	// TODO:Mirar metodo para borrar coche de garaje
 	@JsonIgnore
 	public static Garages garageManager = null;
 
 	private ArrayList<Garage> garages;
-
 
 	public static Garages getInstance() {
 		if (garageManager == null) {
@@ -33,7 +33,6 @@ public class Garages {
 	public void loadGarageList(ArrayList<Garage> garages) {
 		this.garages = garages;
 	}
-
 
 	public void initiateGarageList() {
 		garages = new ArrayList<Garage>();
@@ -63,6 +62,17 @@ public class Garages {
 		ArrayList<Garage> garageWithCars = new ArrayList<Garage>();
 		for (Garage garage : garages) {
 			if (!garage.getCars().isEmpty()) {
+				garageWithCars.add(garage);
+			}
+		}
+		return garageWithCars;
+	}
+
+	@JsonIgnore
+	public ArrayList<Garage> getGarageWithOutCars() {
+		ArrayList<Garage> garageWithCars = new ArrayList<Garage>();
+		for (Garage garage : garages) {
+			if (garage.getCars().isEmpty()) {
 				garageWithCars.add(garage);
 			}
 		}

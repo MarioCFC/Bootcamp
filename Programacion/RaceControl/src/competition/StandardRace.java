@@ -29,13 +29,6 @@ public class StandardRace extends Race {
 		calculateScore();
 		finish();
 
-		/*
-		 * for (Car car : participants) { car.setDistance(0.0); car.setVelocityKmH(0);
-		 * 
-		 * for (int i = 0; i < durationInMin; i++) { runRound(car); }
-		 * 
-		 * calculateScore(); finish(); }
-		 */
 
 	}
 

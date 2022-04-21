@@ -60,10 +60,11 @@ public class Garage {
 
 	public void removeCar(Car removedCar) {
 		cars.remove(removedCar);
+		removedCar.setSticker(null);
 	}
 
 	@Override
 	public String toString() {
-		return "Name: " + name;
+		return "Nombre: " + name;
 	}
 }

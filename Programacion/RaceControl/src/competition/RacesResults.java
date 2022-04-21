@@ -114,7 +114,6 @@ public class RacesResults {
 		sortedList.sort(resultComparator.reversed());
 	}
 
-	// TODO:Arreglar
 	public void sortTournamentRanking(ArrayList<ScoreOfCar> sortedList) {
 		Comparator<ScoreOfCar> resultComparator = new Comparator<ScoreOfCar>() {
 			@Override
