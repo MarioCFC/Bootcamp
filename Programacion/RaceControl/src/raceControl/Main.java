@@ -153,7 +153,7 @@ public class Main {
 						break;
 					case 3:
 						if (!cars.getAll().isEmpty()) {
-							System.out.println("\nLos coches sin garaje son:");
+							System.out.println("\nLos coches existentes son:");
 							showElementsOfList(cars.getAll());
 						} else {
 							System.out.println("No hay ningun coche almacenado");
@@ -187,7 +187,10 @@ public class Main {
 			Tournament selectedTournament;
 
 			if (!unfinishedTournaments.isEmpty()) {
-				System.out.println("Selecciona el torneo a eliminar:");
+
+				System.err.println("\nLos torneos finalizados son:");
+				showElementsOfList(unfinishedTournaments);
+				System.out.println("\nSelecciona el torneo a eliminar:");
 				selectedTournament = selectObjectOfListMenu(unfinishedTournaments);
 
 				if (showConfirmAction()) {
@@ -592,7 +595,7 @@ public class Main {
 					runRaceOfUnfinishedTournament();
 					break;
 				case 3:
-					showTournamentRanking();
+					chooseToShowTournamentRanking();
 					break;
 				case 4:
 					break loopManageTournamentMenu;
@@ -681,9 +684,14 @@ public class Main {
 					saveSnapShot();
 					ArrayList<ScoreOfCarInARace> raceRanking = racesResults.getResultOfARace(runnedRace);
 
-					System.out.println("\nEl ranking es: ");
+					System.out.println("\nEl ranking de la carrera es: ");
 					for (int i = 0; i < raceRanking.size(); i++) {
 						System.out.println((i + 1) + "-" + raceRanking.get(i).toString());
+					}
+
+					if (selectedTournament.isFinished()) {
+						System.out.println("\nEl torneo ha finalizado");
+						showRankingTorunament(selectedTournament);
 					}
 				}
 
@@ -696,7 +704,7 @@ public class Main {
 		}
 	}
 
-	public static void showTournamentRanking() {
+	public static void chooseToShowTournamentRanking() {
 		try {
 
 			int indexOfSelectedTournament;
@@ -710,29 +718,33 @@ public class Main {
 				showElementsOfList(finishedTournaments);
 				selectedTournament = selectObjectOfListMenu(finishedTournaments);
 
-				ArrayList<ScoreOfCar> tournamentRanking = racesResults.getResultsOfTournament(selectedTournament);
-
-				System.out.println("\nEl ranking del torneo es:");
-
-				for (int i = 0; i < tournamentRanking.size(); i++) {
-					System.out.println((i + 1) + "-" + tournamentRanking.get(i).toString());
-				}
-
-				if (tournamentRanking.size() > 1
-						&& tournamentRanking.get(0).getScore() == tournamentRanking.get(1).getScore()) {
-					System.out.println("\nLos ganadores del torneo, estando empatados son: \n1-"
-							+ tournamentRanking.get(0).getCar().toString() + "\n"
-							+ tournamentRanking.get(1).getCar().toString());
-				} else {
-					System.out.println("\nEl ganador del torneo es:\n" + tournamentRanking.get(0).getCar().toString());
-				}
+				showRankingTorunament(selectedTournament);
 
 			} else {
-				System.out.println("\nNo hay torneos finalizados de llos que se puedan ver el ranking");
+				System.out.println("\nNo hay torneos finalizados de los que se puedan ver el ranking");
 			}
 
 		} catch (Exception e) {
 			System.out.println("\nError mostrando el ranking");
+		}
+	}
+
+	public static void showRankingTorunament(Tournament selectedTournament) {
+		ArrayList<ScoreOfCar> tournamentRanking = racesResults.getResultsOfTournament(selectedTournament);
+
+		System.out.println("\nEl ranking del torneo es:");
+
+		for (int i = 0; i < tournamentRanking.size(); i++) {
+			System.out.println((i + 1) + "-" + tournamentRanking.get(i).toString());
+		}
+
+		if (tournamentRanking.size() > 1
+				&& tournamentRanking.get(0).getScore() == tournamentRanking.get(1).getScore()) {
+			System.out.println("\nLos ganadores del torneo, estando empatados son: \n1-"
+					+ tournamentRanking.get(0).getCar().toString() + "\n"
+					+ tournamentRanking.get(1).getCar().toString());
+		} else {
+			System.out.println("\nEl ganador del torneo es:\n" + tournamentRanking.get(0).getCar().toString());
 		}
 	}
 

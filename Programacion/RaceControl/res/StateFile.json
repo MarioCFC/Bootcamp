@@ -1,105 +1,148 @@
 {
   "tournaments" : [ {
-    "id" : "2ae441cd-feba-4950-95a7-ccf42e6cbf94",
-    "name" : "jj",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
-    "races" : [ "54904a83-8f77-45ab-88eb-0068ef41e2ec", "20eafbde-ef44-4539-9cfc-d939e1d47e63", "ad28c21d-4125-4f3d-b7ff-993bdabd4443" ],
-    "numberLimitOfRaces" : 3,
-    "lastRaceRunned" : 3
-  }, {
-    "id" : "205a0cde-89c7-4c63-9e6b-a2fa4d14b0b0",
-    "name" : "tor",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
-    "races" : [ "a470d54c-fdd4-41bf-9269-9634eb252047" ],
-    "numberLimitOfRaces" : 1,
-    "lastRaceRunned" : 1
+    "id" : "1dabd016-e171-48fe-9353-ea0e2bea33c4",
+    "name" : "NASCAR Cup 2022",
+    "participants" : [ "d67ed630-0dd2-4e00-8a69-f14fab8aee8d", "b036cd11-c5dd-4cf3-8703-fa5900a4a75d", "33479dc9-c120-4f69-a7ba-1b7e0bd488e9" ],
+    "races" : [ "48d275f6-de86-40c3-9813-9a98187fc2e1", "cf487727-f6a4-4acf-b8c3-cad078025c98" ],
+    "numberLimitOfRaces" : 2,
+    "lastRaceRunned" : 2
   } ],
   "garages" : [ {
-    "id" : "fd6a183a-8ad2-4811-8a0a-cd20664675ca",
-    "name" : "hjk",
-    "cars" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ]
+    "id" : "3c70c322-d11c-4c21-8a51-881806e8c369",
+    "name" : "Ford",
+    "cars" : [ "3593b7ad-bc70-4e9a-abce-4a580df6ce9c", "b036cd11-c5dd-4cf3-8703-fa5900a4a75d" ]
   }, {
-    "id" : "57f36eef-e3de-4c00-b65a-122f16d4ae91",
-    "name" : "gar3",
-    "cars" : [ ]
+    "id" : "cfa93e9c-3671-49f1-96d3-6aa8b268b183",
+    "name" : "Chevrolet",
+    "cars" : [ "d67ed630-0dd2-4e00-8a69-f14fab8aee8d", "18c26fb7-af7a-478e-ae40-456a6a82d50d" ]
+  }, {
+    "id" : "a95f0273-fc46-4bfe-aceb-d8e86fb6ae6f",
+    "name" : "Toyota",
+    "cars" : [ "00d92faf-349c-49d5-9615-b4b8d9308cf8", "33479dc9-c120-4f69-a7ba-1b7e0bd488e9", "c8b414e5-4e3c-4f9e-b5d8-6e19b8c4ff77" ]
+  }, {
+    "id" : "a82d85e7-5a10-4fdf-b008-e2a94cd6f900",
+    "name" : "Hyundai",
+    "cars" : [ "9dd75fe3-d2d1-4654-b9ca-d94246d6570f" ]
   } ],
   "cars" : [ {
-    "id" : "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0",
-    "velocityKmH" : 10,
-    "distanceMeters" : 498.0,
-    "brand" : "marca",
-    "model" : "modelo",
-    "sticker" : "fd6a183a-8ad2-4811-8a0a-cd20664675ca",
-    "distance" : 498.0
-  }, {
-    "id" : "cd996bd0-0975-4522-8e63-9eda06af5eb5",
+    "id" : "3593b7ad-bc70-4e9a-abce-4a580df6ce9c",
     "velocityKmH" : 0,
     "distanceMeters" : 0.0,
-    "brand" : "marca",
-    "model" : "modelo",
-    "sticker" : null,
+    "brand" : "Ford",
+    "model" : "Fusion",
+    "sticker" : "3c70c322-d11c-4c21-8a51-881806e8c369",
     "distance" : 0.0
   }, {
-    "id" : "22002899-bdef-445b-9f9e-51b985e8bc51",
+    "id" : "b036cd11-c5dd-4cf3-8703-fa5900a4a75d",
+    "velocityKmH" : 110,
+    "distanceMeters" : 104778.0,
+    "brand" : "Ford",
+    "model" : "F-150",
+    "sticker" : "3c70c322-d11c-4c21-8a51-881806e8c369",
+    "distance" : 104778.0
+  }, {
+    "id" : "d67ed630-0dd2-4e00-8a69-f14fab8aee8d",
+    "velocityKmH" : 80,
+    "distanceMeters" : 218778.0,
+    "brand" : "Chevrolet",
+    "model" : "Camaro SS",
+    "sticker" : "cfa93e9c-3671-49f1-96d3-6aa8b268b183",
+    "distance" : 218778.0
+  }, {
+    "id" : "18c26fb7-af7a-478e-ae40-456a6a82d50d",
     "velocityKmH" : 0,
     "distanceMeters" : 0.0,
-    "brand" : "m",
-    "model" : "m",
-    "sticker" : null,
+    "brand" : "Chevrolet",
+    "model" : "Silverado",
+    "sticker" : "cfa93e9c-3671-49f1-96d3-6aa8b268b183",
+    "distance" : 0.0
+  }, {
+    "id" : "00d92faf-349c-49d5-9615-b4b8d9308cf8",
+    "velocityKmH" : 0,
+    "distanceMeters" : 0.0,
+    "brand" : "Toyota",
+    "model" : "Camry",
+    "sticker" : "a95f0273-fc46-4bfe-aceb-d8e86fb6ae6f",
+    "distance" : 0.0
+  }, {
+    "id" : "33479dc9-c120-4f69-a7ba-1b7e0bd488e9",
+    "velocityKmH" : 40,
+    "distanceMeters" : 79441.0,
+    "brand" : "Toyota",
+    "model" : "Supra MKV",
+    "sticker" : "a95f0273-fc46-4bfe-aceb-d8e86fb6ae6f",
+    "distance" : 79441.0
+  }, {
+    "id" : "c8b414e5-4e3c-4f9e-b5d8-6e19b8c4ff77",
+    "velocityKmH" : 0,
+    "distanceMeters" : 0.0,
+    "brand" : "Toyota",
+    "model" : "Tundra",
+    "sticker" : "a95f0273-fc46-4bfe-aceb-d8e86fb6ae6f",
+    "distance" : 0.0
+  }, {
+    "id" : "9dd75fe3-d2d1-4654-b9ca-d94246d6570f",
+    "velocityKmH" : 0,
+    "distanceMeters" : 0.0,
+    "brand" : "Hyundai",
+    "model" : "i20 N",
+    "sticker" : "a82d85e7-5a10-4fdf-b008-e2a94cd6f900",
     "distance" : 0.0
   } ],
   "races" : [ {
     "@class" : "competition.StandardRace",
-    "id" : "54904a83-8f77-45ab-88eb-0068ef41e2ec",
-    "name" : "car",
-    "finished" : false,
-    "eventWichItBelongs" : "2ae441cd-feba-4950-95a7-ccf42e6cbf94",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
+    "id" : "48d275f6-de86-40c3-9813-9a98187fc2e1",
+    "name" : "GEICO 500",
+    "finished" : true,
+    "eventWichItBelongs" : "1dabd016-e171-48fe-9353-ea0e2bea33c4",
+    "participants" : [ "b036cd11-c5dd-4cf3-8703-fa5900a4a75d", "33479dc9-c120-4f69-a7ba-1b7e0bd488e9", "d67ed630-0dd2-4e00-8a69-f14fab8aee8d" ],
     "velocityChangePerMinuteInKmH" : 10,
     "durationInMin" : 240
   }, {
-    "@class" : "competition.KnockoutRace",
-    "id" : "20eafbde-ef44-4539-9cfc-d939e1d47e63",
-    "name" : "kjhk",
-    "finished" : true,
-    "eventWichItBelongs" : "2ae441cd-feba-4950-95a7-ccf42e6cbf94",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
-    "velocityChangePerMinuteInKmH" : 10
-  }, {
     "@class" : "competition.StandardRace",
-    "id" : "ad28c21d-4125-4f3d-b7ff-993bdabd4443",
-    "name" : "car3",
+    "id" : "cf487727-f6a4-4acf-b8c3-cad078025c98",
+    "name" : "Carreara",
     "finished" : true,
-    "eventWichItBelongs" : "2ae441cd-feba-4950-95a7-ccf42e6cbf94",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
+    "eventWichItBelongs" : "1dabd016-e171-48fe-9353-ea0e2bea33c4",
+    "participants" : [ "d67ed630-0dd2-4e00-8a69-f14fab8aee8d", "b036cd11-c5dd-4cf3-8703-fa5900a4a75d", "33479dc9-c120-4f69-a7ba-1b7e0bd488e9" ],
     "velocityChangePerMinuteInKmH" : 10,
     "durationInMin" : 180
-  }, {
-    "@class" : "competition.KnockoutRace",
-    "id" : "a470d54c-fdd4-41bf-9269-9634eb252047",
-    "name" : "sdfs",
-    "finished" : true,
-    "eventWichItBelongs" : "205a0cde-89c7-4c63-9e6b-a2fa4d14b0b0",
-    "participants" : [ "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0" ],
-    "velocityChangePerMinuteInKmH" : 10
   } ],
   "racesResults" : [ {
-    "id" : "5f6fcbff-b35e-44ce-8625-0615f21f7c98",
-    "car" : "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0",
+    "id" : "d0cc54ad-28fb-458e-86ce-b9d04d9fe1d3",
+    "car" : "b036cd11-c5dd-4cf3-8703-fa5900a4a75d",
     "score" : 3,
-    "totalDistance" : 166.0,
-    "race" : "20eafbde-ef44-4539-9cfc-d939e1d47e63"
+    "totalDistance" : 217586.0,
+    "race" : "48d275f6-de86-40c3-9813-9a98187fc2e1"
   }, {
-    "id" : "e4de7b97-10e7-4db4-822d-f69d1a85b9f5",
-    "car" : "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0",
-    "score" : 3,
-    "totalDistance" : 203945.0,
-    "race" : "ad28c21d-4125-4f3d-b7ff-993bdabd4443"
+    "id" : "31aee912-92eb-46b5-b914-94ae9158e1ec",
+    "car" : "33479dc9-c120-4f69-a7ba-1b7e0bd488e9",
+    "score" : 2,
+    "totalDistance" : 137091.0,
+    "race" : "48d275f6-de86-40c3-9813-9a98187fc2e1"
   }, {
-    "id" : "ee381379-8d42-462b-a35f-09d203f04ebb",
-    "car" : "4d3f2bd4-0638-4d2a-89dc-6b5840b1b8f0",
+    "id" : "6bdd2ba8-8a65-46a3-b736-9241afa5cf4f",
+    "car" : "d67ed630-0dd2-4e00-8a69-f14fab8aee8d",
+    "score" : 1,
+    "totalDistance" : 81599.0,
+    "race" : "48d275f6-de86-40c3-9813-9a98187fc2e1"
+  }, {
+    "id" : "a390d293-9e57-4bff-89c4-cd1f7bb0120b",
+    "car" : "d67ed630-0dd2-4e00-8a69-f14fab8aee8d",
     "score" : 3,
-    "totalDistance" : 498.0,
-    "race" : "a470d54c-fdd4-41bf-9269-9634eb252047"
+    "totalDistance" : 218778.0,
+    "race" : "cf487727-f6a4-4acf-b8c3-cad078025c98"
+  }, {
+    "id" : "660e2a6e-a91f-4958-84b6-8ee2d09c7c84",
+    "car" : "b036cd11-c5dd-4cf3-8703-fa5900a4a75d",
+    "score" : 2,
+    "totalDistance" : 104778.0,
+    "race" : "cf487727-f6a4-4acf-b8c3-cad078025c98"
+  }, {
+    "id" : "70468340-c6e5-4456-a7d6-605abc54850f",
+    "car" : "33479dc9-c120-4f69-a7ba-1b7e0bd488e9",
+    "score" : 1,
+    "totalDistance" : 79441.0,
+    "race" : "cf487727-f6a4-4acf-b8c3-cad078025c98"
   } ]
 }
