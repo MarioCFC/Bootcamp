@@ -72,3 +72,7 @@ local.properties
 .sts4-cache/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
+/Backend/hr/hr-api/target/
+/Backend/hr/hr-boot/target/
+/Backend/hr/hr-model/target/
+/Backend/hr/hr-ws/target/

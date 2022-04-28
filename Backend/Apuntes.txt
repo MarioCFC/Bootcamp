@@ -1,0 +1,2 @@
+Comando para levantar el servidor, hay que posicionarse en la carpeta hr-model desde la terminal
+mvn exec:java -P run_database
