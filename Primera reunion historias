@@ -1,0 +1,13 @@
+Para crear experiencia(Historia 22)
+Nombre
+Descripcion
+Fecha-Interesante
+Duracion o Fecha en la que termina
+
+Hacer que las dos subtareas sean dos historias:
+El frontend ,demomento, el criterio de aceptación es que le devuelva un json con la experiencia creada
+
+4y5 historias podrian ser crear la experiencia para un paquete/ asignar una tarea a un paquete
+
+Otras historias
+Hacer tipo netflix, suscripción por tiempo

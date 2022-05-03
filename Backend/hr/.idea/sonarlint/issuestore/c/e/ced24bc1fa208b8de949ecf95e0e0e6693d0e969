@@ -1,0 +1,13 @@
+
+{
+java:S2293["YReplace the type specification in this constructor call with the diamond operator ("<>").(š´å±ıÿÿÿÿ8ñ°ãÇˆ0
+o
+java:S2293p"YReplace the type specification in this constructor call with the diamond operator ("<>").(®Ø‡Ú
+u
+java:S2293q"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷öñ 8ò°ãÇˆ0
+|
+java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨‡¢8‘´ãÇˆ0
+t
+java:S3776n"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(ıå®”ÿÿÿÿÿ8¦´ãÇˆ0
+?
+java:S1659r"#Declare "query" on a separate line.(ïÓôb8ª´ãÇˆ0
