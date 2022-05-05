@@ -34,6 +34,8 @@ public interface IOfferService {
 
     public EntityResult offerCandidateDelete(Map<String, Object> keyMap) throws OntimizeJEERuntimeException;
 
+    public EntityResult offerCandidateDetailsQuery(Map<String, Object> keyMap, List<String> attrList) throws OntimizeJEERuntimeException;
+
     // OFFER CANDIDATES STATUS
     public EntityResult offerCandidateStatusQuery(Map<String, Object> keyMap, List<String> attrList) throws OntimizeJEERuntimeException;
 

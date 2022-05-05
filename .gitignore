@@ -77,3 +77,5 @@ local.properties
 /Backend/hr/hr-model/target/
 /Backend/hr/hr-ws/target/
 /hr/hr-boot/target/
+/Backend/hr/hr-model/nbproject/
+/Backend/hr/hr-ws/nbproject/
