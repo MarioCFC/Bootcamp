@@ -32,7 +32,8 @@ import org.junit.jupiter.api.Test;
  */
 public class OfferRestControllerTest {
 
-    OfferRestController orc;
+    //Si lo pones en otro sitio salta NullPointer
+    private static OfferRestController orc = new OfferRestController();
 
     @BeforeAll
     public static void setUpClass() {
@@ -48,7 +49,7 @@ public class OfferRestControllerTest {
 
     @AfterEach
     public void tearDown() {
-        orc = new OfferRestController();
+
     }
 
     @Test
