@@ -1,0 +1,1 @@
+Hasta Permitir el uso del render en otros módulos funciona bien, a lo mejor no va después y se resuelve borrando un import en accounts.module.ts
